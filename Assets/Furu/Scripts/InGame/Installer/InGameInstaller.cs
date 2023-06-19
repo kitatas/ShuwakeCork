@@ -11,23 +11,28 @@ namespace Furu.InGame.Installer
     public sealed class InGameInstaller : LifetimeScope
     {
         [SerializeField] private BottleView bottleView = default;
+        [SerializeField] private TimeView timeView = default;
         [SerializeField] private TitleView titleView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // UseCase
             builder.Register<StateUseCase>(Lifetime.Scoped);
+            builder.Register<TimeUseCase>(Lifetime.Scoped);
 
             // Controller
             builder.Register<StateController>(Lifetime.Scoped);
+            builder.Register<InputState>(Lifetime.Scoped);
             builder.Register<SetUpState>(Lifetime.Scoped);
             builder.Register<TitleState>(Lifetime.Scoped);
 
             // Presenter
             builder.RegisterEntryPoint<StatePresenter>();
+            builder.RegisterEntryPoint<TimePresenter>();
 
             // View
             builder.RegisterInstance<BottleView>(bottleView);
+            builder.RegisterInstance<TimeView>(timeView);
             builder.RegisterInstance<TitleView>(titleView);
         }
     }

@@ -30,7 +30,7 @@ namespace Furu.InGame.Presentation.Controller
         {
             await _bottleView.ShowAsync(UiConfig.ANIMATION_TIME, token);
 
-            return GameState.None;
+            return GameState.Input;
         }
     }
 }

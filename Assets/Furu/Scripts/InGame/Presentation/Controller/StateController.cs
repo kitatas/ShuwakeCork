@@ -9,12 +9,13 @@ namespace Furu.InGame.Presentation.Controller
     {
         private readonly List<BaseState> _states;
 
-        public StateController(TitleState titleState, SetUpState setUpState)
+        public StateController(TitleState titleState, SetUpState setUpState, InputState inputState)
         {
             _states = new List<BaseState>
             {
                 titleState,
                 setUpState,
+                inputState,
             };
         }
 
