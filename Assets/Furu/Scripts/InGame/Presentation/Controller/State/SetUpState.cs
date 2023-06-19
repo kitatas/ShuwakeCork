@@ -10,11 +10,13 @@ namespace Furu.InGame.Presentation.Controller
     {
         private readonly StateUseCase _stateUseCase;
         private readonly BottleView _bottleView;
+        private readonly CorkView _corkView;
 
-        public SetUpState(StateUseCase stateUseCase, BottleView bottleView)
+        public SetUpState(StateUseCase stateUseCase, BottleView bottleView, CorkView corkView)
         {
             _stateUseCase = stateUseCase;
             _bottleView = bottleView;
+            _corkView = corkView;
         }
 
         public override GameState state => GameState.SetUp;
@@ -22,13 +24,17 @@ namespace Furu.InGame.Presentation.Controller
         public override async UniTask InitAsync(CancellationToken token)
         {
             _bottleView.Init(_stateUseCase.IsState);
+            _corkView.Init();
 
             await UniTask.Yield(token);
         }
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            await _bottleView.ShowAsync(UiConfig.ANIMATION_TIME, token);
+            await (
+                _bottleView.ShowAsync(UiConfig.ANIMATION_TIME, token),
+                _corkView.ShowAsync(UiConfig.ANIMATION_TIME, token)
+            );
 
             return GameState.Input;
         }
