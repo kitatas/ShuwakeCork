@@ -12,5 +12,10 @@ namespace Furu.InGame.Domain.UseCase
         }
 
         public IObservable<GameState> gameState => property.Where(x => x != GameState.None);
+
+        public bool IsState(GameState state)
+        {
+            return property.Value == state;
+        }
     }
 }

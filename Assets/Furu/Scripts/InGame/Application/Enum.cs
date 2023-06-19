@@ -4,5 +4,7 @@ namespace Furu.InGame
     {
         None,
         Title,
+        SetUp,
+        Input,
     }
 }

@@ -24,7 +24,7 @@ namespace Furu.InGame.Presentation.Controller
         {
             await _titleView.StartAsync(token);
 
-            return GameState.None;
+            return GameState.SetUp;
         }
     }
 }

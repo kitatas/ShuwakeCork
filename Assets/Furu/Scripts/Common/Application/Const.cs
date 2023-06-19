@@ -1,5 +1,10 @@
 namespace Furu.Common
 {
+    public sealed class UiConfig
+    {
+        public const float ANIMATION_TIME = 0.5f;
+    }
+
     public sealed class ExceptionConfig
     {
         // crash
