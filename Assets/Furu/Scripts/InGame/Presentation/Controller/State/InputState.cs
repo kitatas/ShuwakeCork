@@ -36,7 +36,7 @@ namespace Furu.InGame.Presentation.Controller
                 await UniTask.Yield(token);
             }
 
-            return GameState.None;
+            return GameState.Burst;
         }
     }
 }
