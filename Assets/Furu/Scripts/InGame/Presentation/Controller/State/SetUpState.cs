@@ -24,7 +24,7 @@ namespace Furu.InGame.Presentation.Controller
         public override async UniTask InitAsync(CancellationToken token)
         {
             _bottleView.Init(_stateUseCase.IsState);
-            _corkView.Init();
+            _corkView.Init(_stateUseCase.IsState);
 
             await UniTask.Yield(token);
         }
