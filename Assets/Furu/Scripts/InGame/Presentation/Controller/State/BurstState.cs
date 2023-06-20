@@ -29,8 +29,10 @@ namespace Furu.InGame.Presentation.Controller
             // TODO: 角度調整
             var angle = new Vector2(1.0f, 1.0f);
             _corkView.Shot(_bottleView.dragPower * 0.01f * angle);
+            _bottleView.ShowSplash();
 
-            await UniTask.Yield(token);
+            // TODO: Cork が停止するまで
+            await UniTask.WaitUntil(() => false, cancellationToken: token);
 
             return GameState.None;
         }

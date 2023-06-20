@@ -14,6 +14,7 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private Camera mainCamera = default;
         [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Collider2D collider2d = default;
+        [SerializeField] private ParticleSystem splash = default;
 
         private Func<GameState, bool> _isState;
         private Subject<Vector2> _dragPosition;
@@ -41,6 +42,7 @@ namespace Furu.InGame.Presentation.View
                 .SetEase(Ease.Linear)
                 .SetLink(gameObject);
             collider2d.enabled = false;
+            splash.Stop();
         }
 
         public async UniTask ShowAsync(float animationTime, CancellationToken token)
@@ -66,6 +68,11 @@ namespace Furu.InGame.Presentation.View
                 position.z = 0;
                 transform.position = position;
             }
+        }
+
+        public void ShowSplash()
+        {
+            splash.Play();
         }
     }
 }
