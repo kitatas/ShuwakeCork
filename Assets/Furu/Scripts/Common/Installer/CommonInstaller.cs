@@ -1,3 +1,4 @@
+using Furu.Common.Domain.Repository;
 using Furu.Common.Domain.UseCase;
 using Furu.Common.Presentation.Presenter;
 using VContainer;
@@ -9,6 +10,9 @@ namespace Furu.Common.Installer
     {
         protected override void Configure(IContainerBuilder builder)
         {
+            // Repository
+            builder.Register<SaveRepository>(Lifetime.Singleton);
+
             // UseCase
             builder.Register<SceneUseCase>(Lifetime.Singleton);
 

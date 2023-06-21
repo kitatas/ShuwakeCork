@@ -5,6 +5,16 @@ namespace Furu.Common
         public const float ANIMATION_TIME = 0.5f;
     }
 
+    public sealed class SaveKeyConfig
+    {
+        public const string ES3_KEY = "";
+    }
+
+    public sealed class SoundConfig
+    {
+        public const float INIT_VOLUME = 5.0f;
+    }
+
     public sealed class ExceptionConfig
     {
         // crash
