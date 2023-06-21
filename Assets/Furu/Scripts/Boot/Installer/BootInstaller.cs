@@ -15,6 +15,7 @@ namespace Furu.Boot.Installer
 
             // Controller
             builder.Register<StateController>(Lifetime.Scoped);
+            builder.Register<LoadState>(Lifetime.Scoped);
 
             // Presenter
             builder.RegisterEntryPoint<StatePresenter>();
