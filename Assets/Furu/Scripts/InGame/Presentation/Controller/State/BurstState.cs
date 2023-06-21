@@ -28,7 +28,7 @@ namespace Furu.InGame.Presentation.Controller
             // TODO: 発射演出
             // TODO: 角度調整
             var angle = new Vector2(1.0f, 1.0f);
-            _corkView.Shot(_bottleView.dragPower * 0.01f * angle);
+            _corkView.Shot(_bottleView.shakePower * 10.0f * angle);
             _bottleView.ShowSplash();
 
             await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);
