@@ -10,7 +10,7 @@ namespace Furu.InGame.Presentation.Controller
         private readonly List<BaseState> _states;
 
         public StateController(TitleState titleState, SetUpState setUpState, InputState inputState,
-            BurstState burstState, FinishState finishState)
+            BurstState burstState, FinishState finishState, ResultState resultState)
         {
             _states = new List<BaseState>
             {
@@ -19,6 +19,7 @@ namespace Furu.InGame.Presentation.Controller
                 inputState,
                 burstState,
                 finishState,
+                resultState,
             };
         }
 

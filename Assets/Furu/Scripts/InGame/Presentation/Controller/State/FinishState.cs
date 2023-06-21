@@ -31,7 +31,7 @@ namespace Furu.InGame.Presentation.Controller
             // ランキング反映待ち
             await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
 
-            return GameState.None;
+            return GameState.Result;
         }
     }
 }
