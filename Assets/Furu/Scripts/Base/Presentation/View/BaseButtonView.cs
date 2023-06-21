@@ -23,5 +23,12 @@ namespace Furu.Base.Presentation.View
             push.Subscribe(_ => pushed?.Invoke())
                 .AddTo(this);
         }
+
+        protected Image image => button.image;
+
+        protected void Activate(bool value)
+        {
+            button.enabled = value;
+        }
     }
 }

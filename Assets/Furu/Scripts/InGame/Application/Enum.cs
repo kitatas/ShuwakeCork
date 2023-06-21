@@ -8,5 +8,6 @@ namespace Furu.InGame
         Input,
         Burst,
         Finish,
+        Result,
     }
 }
