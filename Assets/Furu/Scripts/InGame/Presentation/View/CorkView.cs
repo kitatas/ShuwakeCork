@@ -11,9 +11,12 @@ namespace Furu.InGame.Presentation.View
 {
     public sealed class CorkView : MonoBehaviour
     {
+        [SerializeField] private CameraView cameraView = default;
+
         [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Rigidbody2D rigidbody2d = default;
 
+        private bool _isGround;
         public float flyingDistance => transform.position.x;
 
         public void Init(Func<GameState, bool> isState)
@@ -25,14 +28,13 @@ namespace Furu.InGame.Presentation.View
                 .SetLink(gameObject);
             rigidbody2d.simulated = false;
 
-            var isGround = false;
             this.OnCollisionEnter2DAsObservable()
                 .Where(x => x.gameObject.CompareTag(TagConfig.GROUND))
-                .Subscribe(_ => isGround = true)
+                .Subscribe(_ => _isGround = true)
                 .AddTo(this);
 
             this.UpdateAsObservable()
-                .Where(_ => isGround == false) // 一度接地したら角度の計算をしない
+                .Where(_ => _isGround == false) // 一度接地したら角度の計算をしない
                 .Where(_ =>
                 {
                     var isBurstState = isState?.Invoke(GameState.Burst);
@@ -51,6 +53,15 @@ namespace Furu.InGame.Presentation.View
 
                     transform.eulerAngles = new Vector3(0.0f, 0.0f, angle);
                 })
+                .AddTo(this);
+
+            this.UpdateAsObservable()
+                .Where(_ =>
+                {
+                    var isBurstState = isState?.Invoke(GameState.Burst);
+                    return isBurstState.HasValue && isBurstState.Value;
+                })
+                .Subscribe(_ => cameraView.Chase(flyingDistance))
                 .AddTo(this);
         }
 
@@ -72,7 +83,10 @@ namespace Furu.InGame.Presentation.View
 
         public bool IsStop()
         {
-            if (rigidbody2d.velocity.magnitude <= 0.2f)
+            // 一度も接地していない
+            if (_isGround == false) return false;
+
+            if (rigidbody2d.velocity.magnitude <= 0.1f)
             {
                 rigidbody2d.velocity = Vector2.zero;
                 return true;

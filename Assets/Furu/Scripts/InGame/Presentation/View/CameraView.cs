@@ -10,5 +10,10 @@ namespace Furu.InGame.Presentation.View
         {
             return mainCamera.ScreenToWorldPoint(cursorPosition);
         }
+
+        public void Chase(float x)
+        {
+            transform.position = new Vector3(x, 0.0f, -10.0f);
+        }
     }
 }
