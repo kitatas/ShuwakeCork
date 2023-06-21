@@ -4,5 +4,6 @@ namespace Furu.Boot
     {
         None,
         Load,
+        Login,
     }
 }

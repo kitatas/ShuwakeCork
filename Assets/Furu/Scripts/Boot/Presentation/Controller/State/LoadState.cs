@@ -16,7 +16,7 @@ namespace Furu.Boot.Presentation.Controller
         {
             await UniTask.Yield(token);
 
-            return BootState.None;
+            return BootState.Login;
         }
     }
 }
