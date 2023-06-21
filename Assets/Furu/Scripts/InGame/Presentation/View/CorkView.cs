@@ -14,6 +14,8 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Rigidbody2D rigidbody2d = default;
 
+        public float flyingDistance => transform.position.x;
+
         public void Init(Func<GameState, bool> isState)
         {
             // Hide

@@ -24,6 +24,7 @@ namespace Furu.InGame.Installer
             // Controller
             builder.Register<StateController>(Lifetime.Scoped);
             builder.Register<BurstState>(Lifetime.Scoped);
+            builder.Register<FinishState>(Lifetime.Scoped);
             builder.Register<InputState>(Lifetime.Scoped);
             builder.Register<SetUpState>(Lifetime.Scoped);
             builder.Register<TitleState>(Lifetime.Scoped);

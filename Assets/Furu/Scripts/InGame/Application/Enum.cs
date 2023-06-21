@@ -7,5 +7,6 @@ namespace Furu.InGame
         SetUp,
         Input,
         Burst,
+        Finish,
     }
 }

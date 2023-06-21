@@ -33,7 +33,7 @@ namespace Furu.InGame.Presentation.Controller
 
             await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);
 
-            return GameState.None;
+            return GameState.Finish;
         }
     }
 }
