@@ -31,8 +31,7 @@ namespace Furu.InGame.Presentation.Controller
             _corkView.Shot(_bottleView.dragPower * 0.01f * angle);
             _bottleView.ShowSplash();
 
-            // TODO: Cork が停止するまで
-            await UniTask.WaitUntil(() => false, cancellationToken: token);
+            await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);
 
             return GameState.None;
         }

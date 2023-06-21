@@ -23,7 +23,14 @@ namespace Furu.InGame.Presentation.View
                 .SetLink(gameObject);
             rigidbody2d.simulated = false;
 
+            var isGround = false;
+            this.OnCollisionEnter2DAsObservable()
+                .Where(x => x.gameObject.CompareTag(TagConfig.GROUND))
+                .Subscribe(_ => isGround = true)
+                .AddTo(this);
+
             this.UpdateAsObservable()
+                .Where(_ => isGround == false) // 一度接地したら角度の計算をしない
                 .Where(_ =>
                 {
                     var isBurstState = isState?.Invoke(GameState.Burst);
@@ -59,6 +66,17 @@ namespace Furu.InGame.Presentation.View
             transform.SetParent(null);
             rigidbody2d.simulated = true;
             rigidbody2d.AddForce(power);
+        }
+
+        public bool IsStop()
+        {
+            if (rigidbody2d.velocity.magnitude <= 0.2f)
+            {
+                rigidbody2d.velocity = Vector2.zero;
+                return true;
+            }
+
+            return false;
         }
     }
 }
