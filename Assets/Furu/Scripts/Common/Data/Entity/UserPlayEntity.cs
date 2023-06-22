@@ -16,6 +16,15 @@ namespace Furu.Common.Data.Entity
             };
         }
 
+        public UserPlayEntity UpdateByPlay(float distanceScore)
+        {
+            return new UserPlayEntity
+            {
+                playCount = playCount + 1,
+                distance = distance.Update(distanceScore),
+            };
+        }
+
         public string ToJson()
         {
             return JsonConvert.SerializeObject(this);
@@ -33,6 +42,15 @@ namespace Furu.Common.Data.Entity
             {
                 current = 0.0f,
                 high = 0.0f,
+            };
+        }
+
+        public RecordEntity Update(float score)
+        {
+            return new RecordEntity
+            {
+                current = score,
+                high = score > high ? score : high,
             };
         }
 

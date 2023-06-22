@@ -15,12 +15,14 @@ namespace Furu.InGame.Installer
         [SerializeField] private CorkView corkView = default;
         [SerializeField] private TimeView timeView = default;
         [SerializeField] private TitleView titleView = default;
+        [SerializeField] private UserRecordView userRecordView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // UseCase
             builder.Register<StateUseCase>(Lifetime.Scoped);
             builder.Register<TimeUseCase>(Lifetime.Scoped);
+            builder.Register<UserRecordUseCase>(Lifetime.Scoped);
 
             // Controller
             builder.Register<StateController>(Lifetime.Scoped);
@@ -41,6 +43,7 @@ namespace Furu.InGame.Installer
             builder.RegisterInstance<CorkView>(corkView);
             builder.RegisterInstance<TimeView>(timeView);
             builder.RegisterInstance<TitleView>(titleView);
+            builder.RegisterInstance<UserRecordView>(userRecordView);
         }
     }
 }
