@@ -11,6 +11,7 @@ namespace Furu.Boot.Installer
     public sealed class BootInstaller : LifetimeScope
     {
         [SerializeField] private RegisterView registerView = default;
+        [SerializeField] private UpdateView updateView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -29,6 +30,7 @@ namespace Furu.Boot.Installer
 
             // View
             builder.RegisterInstance<RegisterView>(registerView);
+            builder.RegisterInstance<UpdateView>(updateView);
         }
     }
 }
