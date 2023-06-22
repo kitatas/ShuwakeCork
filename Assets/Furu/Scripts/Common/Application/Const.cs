@@ -9,7 +9,9 @@ namespace Furu.Common
     public sealed class PlayFabConfig
     {
         public const string TITLE_ID = "";
+        public const string RANKING_DISTANCE_KEY = "";
         public const string USER_PLAY_RECORD_KEY = "";
+        public const int SCORE_RATE = 10000;
     }
 
     public sealed class SaveKeyConfig

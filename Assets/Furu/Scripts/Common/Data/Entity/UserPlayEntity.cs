@@ -35,5 +35,10 @@ namespace Furu.Common.Data.Entity
                 high = 0.0f,
             };
         }
+
+        public int GetCurrentForRanking()
+        {
+            return (int)(current * PlayFabConfig.SCORE_RATE);
+        }
     }
 }

@@ -149,5 +149,32 @@ namespace Furu.Common.Domain.Repository
                 throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA);
             }
         }
+
+        public async UniTask SendToDistanceRankingAsync(Data.Entity.UserPlayEntity playEntity, CancellationToken token)
+        {
+            var request = new UpdatePlayerStatisticsRequest
+            {
+                Statistics = new List<StatisticUpdate>
+                {
+                    new StatisticUpdate
+                    {
+                        StatisticName = PlayFabConfig.RANKING_DISTANCE_KEY,
+                        Value = playEntity.distance.GetCurrentForRanking(),
+                    },
+                },
+            };
+
+            var completionSource = new UniTaskCompletionSource<UpdatePlayerStatisticsResult>();
+            PlayFabClientAPI.UpdatePlayerStatistics(
+                request,
+                result => completionSource.TrySetResult(result),
+                error => throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA));
+
+            var response = await completionSource.Task;
+            if (response == null)
+            {
+                throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA);
+            }
+        }
     }
 }
