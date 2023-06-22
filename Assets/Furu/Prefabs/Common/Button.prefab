@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8509804, g: 0.9490196, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -78,13 +78,13 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-  m_DrawShape: 0
+  m_DrawShape: 3
   m_ImageType: 0
   m_MaterialMode: 0
   m_StrokeWidth: 0
   m_OutlineWidth: 0
-  m_OutlineColor: {r: 0, g: 0, b: 0, a: 1}
-  m_FalloffDistance: 0.5
+  m_OutlineColor: {r: 0.34901962, g: 0.69803923, b: 0.8, a: 1}
+  m_FalloffDistance: 0
   m_ConstrainRotation: 1
   m_ShapeRotation: 0
   m_FlipHorizontal: 0
@@ -93,8 +93,8 @@ MonoBehaviour:
     m_CornerRadius: {x: 0, y: 0, z: 0}
     m_UniformCornerRadius: 0
   m_Rectangle:
-    m_CornerRadius: {x: 0, y: 0, z: 0, w: 0}
-    m_UniformCornerRadius: 0
+    m_CornerRadius: {x: 10, y: 10, z: 10, w: 10}
+    m_UniformCornerRadius: 1
   m_Circle:
     m_Radius: 0
     m_FitRadius: 0
@@ -209,20 +209,16 @@ PrefabInstance:
       value: Button
       objectReference: {fileID: 0}
     - target: {fileID: 447055532806972415, guid: 68995008600f742019ca008c4e89bf92, type: 3}
-      propertyPath: m_fontColor.b
-      value: 0
+      propertyPath: m_fontSize
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 447055532806972415, guid: 68995008600f742019ca008c4e89bf92, type: 3}
-      propertyPath: m_fontColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 447055532806972415, guid: 68995008600f742019ca008c4e89bf92, type: 3}
-      propertyPath: m_fontColor.r
-      value: 0
+      propertyPath: m_fontSizeBase
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 447055532806972415, guid: 68995008600f742019ca008c4e89bf92, type: 3}
       propertyPath: m_fontColor32.rgba
-      value: 4278190080
+      value: 4291605081
       objectReference: {fileID: 0}
     - target: {fileID: 967547291042811247, guid: 68995008600f742019ca008c4e89bf92, type: 3}
       propertyPath: m_Pivot.x
