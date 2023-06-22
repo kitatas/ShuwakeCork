@@ -9,12 +9,13 @@ namespace Furu.Boot.Presentation.Controller
     {
         private readonly List<BaseState> _states;
 
-        public StateController(LoadState loadState, LoginState loginState)
+        public StateController(LoadState loadState, LoginState loginState, CheckState checkState)
         {
             _states = new List<BaseState>
             {
                 loadState,
                 loginState,
+                checkState,
             };
         }
 

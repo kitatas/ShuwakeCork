@@ -34,7 +34,7 @@ namespace Furu.Boot.Presentation.Controller
                 await RegisterAsync(token);
             }
 
-            return BootState.None;
+            return BootState.Check;
         }
 
         private async UniTask RegisterAsync(CancellationToken token)

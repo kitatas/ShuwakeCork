@@ -20,6 +20,7 @@ namespace Furu.Boot.Installer
 
             // Controller
             builder.Register<StateController>(Lifetime.Scoped);
+            builder.Register<CheckState>(Lifetime.Scoped);
             builder.Register<LoadState>(Lifetime.Scoped);
             builder.Register<LoginState>(Lifetime.Scoped);
 
