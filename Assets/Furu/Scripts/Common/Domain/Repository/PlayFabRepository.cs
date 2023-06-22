@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Furu.Common.Data.DataStore;
@@ -124,6 +125,29 @@ namespace Furu.Common.Domain.Repository
             var userId = profile == null ? "" : profile.PlayerId;
 
             return new UserData(userName, userId, userDataRecord);
+        }
+
+        public async UniTask UpdatePlayRecordAsync(Data.Entity.UserPlayEntity playEntity, CancellationToken token)
+        {
+            var request = new UpdateUserDataRequest
+            {
+                Data = new Dictionary<string, string>
+                {
+                    { PlayFabConfig.USER_PLAY_RECORD_KEY, playEntity.ToJson() },
+                },
+            };
+
+            var completionSource = new UniTaskCompletionSource<UpdateUserDataResult>();
+            PlayFabClientAPI.UpdateUserData(
+                request,
+                result => completionSource.TrySetResult(result),
+                error => throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA));
+
+            var response = await completionSource.Task;
+            if (response == null)
+            {
+                throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA);
+            }
         }
     }
 }

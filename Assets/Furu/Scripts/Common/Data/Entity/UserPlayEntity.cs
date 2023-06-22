@@ -15,6 +15,11 @@ namespace Furu.Common.Data.Entity
                 distance = RecordEntity.Default(),
             };
         }
+
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public sealed class RecordEntity
