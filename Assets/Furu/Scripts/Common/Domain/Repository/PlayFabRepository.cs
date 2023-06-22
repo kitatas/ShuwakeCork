@@ -45,20 +45,13 @@ namespace Furu.Common.Domain.Repository
                 },
             };
 
-            LoginResult response = null;
-            {
-                var completionSource = new UniTaskCompletionSource();
-                PlayFabClientAPI.LoginWithCustomID(
-                    request,
-                    result =>
-                    {
-                        response = result;
-                        completionSource.TrySetResult();
-                    },
-                    error => throw new RetryException(ExceptionConfig.FAILED_LOGIN));
-                await completionSource.Task;
-            }
+            var completionSource = new UniTaskCompletionSource<LoginResult>();
+            PlayFabClientAPI.LoginWithCustomID(
+                request,
+                result => completionSource.TrySetResult(result),
+                error => throw new RetryException(ExceptionConfig.FAILED_LOGIN));
 
+            var response = await completionSource.Task;
             if (response == null)
             {
                 throw new RetryException(ExceptionConfig.FAILED_LOGIN);
@@ -84,27 +77,21 @@ namespace Furu.Common.Domain.Repository
                 DisplayName = name,
             };
 
-            UpdateUserTitleDisplayNameResult response = null;
-            {
-                var completionSource = new UniTaskCompletionSource();
-                PlayFabClientAPI.UpdateUserTitleDisplayName(
-                    request,
-                    result =>
-                    {
-                        response = result;
-                        completionSource.TrySetResult();
-                    },
-                    error =>
-                    {
-                        // 名前更新失敗の要因を2つに絞る
-                        // すでに登録されているユーザー名 or それ以外
-                        var message = error.Error == PlayFabErrorCode.NameNotAvailable
-                            ? ExceptionConfig.UNMATCHED_USER_NAME_RULE
-                            : ExceptionConfig.FAILED_UPDATE_DATA;
-                        throw new RetryException(message);
-                    });
-                await completionSource.Task;
-            }
+            var completionSource = new UniTaskCompletionSource<UpdateUserTitleDisplayNameResult>();
+            PlayFabClientAPI.UpdateUserTitleDisplayName(
+                request,
+                result => completionSource.TrySetResult(result),
+                error =>
+                {
+                    // 名前更新失敗の要因を2つに絞る
+                    // すでに登録されているユーザー名 or それ以外
+                    var message = error.Error == PlayFabErrorCode.NameNotAvailable
+                        ? ExceptionConfig.UNMATCHED_USER_NAME_RULE
+                        : ExceptionConfig.FAILED_UPDATE_DATA;
+                    throw new RetryException(message);
+                });
+
+            var response = await completionSource.Task;
             if (response == null)
             {
                 throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA);
