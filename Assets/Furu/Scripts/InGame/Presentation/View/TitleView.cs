@@ -8,9 +8,19 @@ namespace Furu.InGame.Presentation.View
     {
         [SerializeField] private StartButtonView startButton = default;
 
-        public async UniTask StartAsync(CancellationToken token)
+        [SerializeField] private TopView topView = default;
+
+        public async UniTaskVoid SetUpAsync(float animationTime, CancellationToken token)
+        {
+            topView.SetUpAsync(animationTime, token).Forget();
+            await UniTask.Yield(token);
+        }
+
+        public async UniTask StartAsync(float animationTime, CancellationToken token)
         {
             await startButton.PushAsync(token);
+
+            await topView.HideAsync(animationTime, token);
         }
     }
 }
