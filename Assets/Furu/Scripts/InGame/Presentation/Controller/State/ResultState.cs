@@ -2,36 +2,39 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Furu.Common;
 using Furu.Common.Domain.UseCase;
+using Furu.InGame.Domain.UseCase;
 using Furu.InGame.Presentation.View;
 
 namespace Furu.InGame.Presentation.Controller
 {
     public sealed class ResultState : BaseState
     {
+        private readonly RankingUseCase _rankingUseCase;
         private readonly SceneUseCase _sceneUseCase;
-        private readonly ReloadButtonView _reloadButtonView;
+        private readonly RankingView _rankingView;
 
-        public ResultState(SceneUseCase sceneUseCase, ReloadButtonView reloadButtonView)
+        public ResultState(RankingUseCase rankingUseCase, SceneUseCase sceneUseCase, RankingView rankingView)
         {
+            _rankingUseCase = rankingUseCase;
             _sceneUseCase = sceneUseCase;
-            _reloadButtonView = reloadButtonView;
+            _rankingView = rankingView;
         }
 
         public override GameState state => GameState.Result;
 
         public override async UniTask InitAsync(CancellationToken token)
         {
-            _reloadButtonView.HideAsync(0.0f, token).Forget();
+            _rankingView.HideAsync(0.0f, token).Forget();
 
             await UniTask.Yield(token);
         }
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            // TODO: ランキング表示
+            var records = await _rankingUseCase.GetDistanceRankingAsync(token);
+            _rankingView.SetUp(records);
 
-            await _reloadButtonView.ShowAsync(UiConfig.ANIMATION_TIME, token);
-            await _reloadButtonView.PushAsync(token);
+            await _rankingView.ReloadAsync(UiConfig.POPUP_TIME, token);
 
             _sceneUseCase.Load(SceneName.Main);
 

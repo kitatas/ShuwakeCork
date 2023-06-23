@@ -10,7 +10,7 @@ namespace Furu.InGame.Installer
 {
     public sealed class InGameInstaller : LifetimeScope
     {
-        [SerializeField] private ReloadButtonView reloadButtonView = default;
+        [SerializeField] private RankingView rankingView = default;
         [SerializeField] private BottleView bottleView = default;
         [SerializeField] private CorkView corkView = default;
         [SerializeField] private TimeView timeView = default;
@@ -20,6 +20,7 @@ namespace Furu.InGame.Installer
         protected override void Configure(IContainerBuilder builder)
         {
             // UseCase
+            builder.Register<RankingUseCase>(Lifetime.Scoped);
             builder.Register<StateUseCase>(Lifetime.Scoped);
             builder.Register<TimeUseCase>(Lifetime.Scoped);
             builder.Register<UserRecordUseCase>(Lifetime.Scoped);
@@ -38,7 +39,7 @@ namespace Furu.InGame.Installer
             builder.RegisterEntryPoint<TimePresenter>();
 
             // View
-            builder.RegisterInstance<ReloadButtonView>(reloadButtonView);
+            builder.RegisterInstance<RankingView>(rankingView);
             builder.RegisterInstance<BottleView>(bottleView);
             builder.RegisterInstance<CorkView>(corkView);
             builder.RegisterInstance<TimeView>(timeView);
