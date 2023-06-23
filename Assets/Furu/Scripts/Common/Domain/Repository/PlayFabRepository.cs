@@ -50,7 +50,7 @@ namespace Furu.Common.Domain.Repository
             PlayFabClientAPI.LoginWithCustomID(
                 request,
                 result => completionSource.TrySetResult(result),
-                error => throw new RetryException(ExceptionConfig.FAILED_LOGIN));
+                error => completionSource.TrySetException(new RetryException(ExceptionConfig.FAILED_LOGIN)));
 
             var response = await completionSource.Task;
             if (response == null)
@@ -89,7 +89,7 @@ namespace Furu.Common.Domain.Repository
                     var message = error.Error == PlayFabErrorCode.NameNotAvailable
                         ? ExceptionConfig.UNMATCHED_USER_NAME_RULE
                         : ExceptionConfig.FAILED_UPDATE_DATA;
-                    throw new RetryException(message);
+                    completionSource.TrySetException(new RetryException(message));
                 });
 
             var response = await completionSource.Task;
@@ -141,7 +141,7 @@ namespace Furu.Common.Domain.Repository
             PlayFabClientAPI.UpdateUserData(
                 request,
                 result => completionSource.TrySetResult(result),
-                error => throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA));
+                error => completionSource.TrySetException(new RetryException(ExceptionConfig.FAILED_UPDATE_DATA)));
 
             var response = await completionSource.Task;
             if (response == null)
@@ -168,7 +168,7 @@ namespace Furu.Common.Domain.Repository
             PlayFabClientAPI.UpdatePlayerStatistics(
                 request,
                 result => completionSource.TrySetResult(result),
-                error => throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA));
+                error => completionSource.TrySetException(new RetryException(ExceptionConfig.FAILED_UPDATE_DATA)));
 
             var response = await completionSource.Task;
             if (response == null)
@@ -194,7 +194,7 @@ namespace Furu.Common.Domain.Repository
             PlayFabClientAPI.GetLeaderboard(
                 request,
                 result => completionSource.TrySetResult(result),
-                error => throw new RetryException(ExceptionConfig.FAILED_RESPONSE_DATA));
+                error => completionSource.TrySetException(new RetryException(ExceptionConfig.FAILED_RESPONSE_DATA)));
 
             var response = await completionSource.Task;
             if (response == null)

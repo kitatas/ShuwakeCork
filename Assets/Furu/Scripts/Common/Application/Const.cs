@@ -45,5 +45,7 @@ namespace Furu.Common
         public const string NOT_FOUND_STATE = "NOT_FOUND_STATE";
         public const string UNMATCHED_LOAD_TYPE = "UNMATCHED_LOAD_TYPE";
         public const string UNMATCHED_RANKING_TYPE = "UNMATCHED_RANKING_TYPE";
+
+        public const string UNKNOWN_ERROR = "UNKNOWN_ERROR";
     }
 }

@@ -3,6 +3,8 @@ using System.Threading;
 using Cysharp.Threading.Tasks;
 using Furu.Boot.Domain.UseCase;
 using Furu.Boot.Presentation.Controller;
+using Furu.Common;
+using Furu.Common.Presentation.Controller;
 using UniRx;
 using VContainer.Unity;
 
@@ -12,17 +14,21 @@ namespace Furu.Boot.Presentation.Presenter
     {
         private readonly StateUseCase _stateUseCase;
         private readonly StateController _stateController;
+        private readonly ExceptionController _exceptionController;
         private readonly CancellationTokenSource _tokenSource;
 
-        public StatePresenter(StateUseCase stateUseCase, StateController stateController)
+        public StatePresenter(StateUseCase stateUseCase, StateController stateController,
+            ExceptionController exceptionController)
         {
             _stateUseCase = stateUseCase;
             _stateController = stateController;
+            _exceptionController = exceptionController;
             _tokenSource = new CancellationTokenSource();
         }
 
         public void Initialize()
         {
+            _exceptionController.InitAsync(_tokenSource.Token).Forget();
             _stateController.InitAsync(_tokenSource.Token).Forget();
 
             _stateUseCase.bootState
@@ -39,7 +45,12 @@ namespace Furu.Boot.Presentation.Presenter
             }
             catch (Exception e)
             {
-                UnityEngine.Debug.LogError($"{state}: {e}");
+                var type = await _exceptionController.ShowExceptionAsync(e, _tokenSource.Token);
+                if (type == ExceptionType.Retry)
+                {
+                    await ExecAsync(state, token);
+                }
+
                 throw;
             }
         }

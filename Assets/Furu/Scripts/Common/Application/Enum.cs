@@ -19,4 +19,13 @@ namespace Furu.Common
         None,
         Distance,
     }
+
+    public enum ExceptionType
+    {
+        None,
+        Cancel,
+        Retry,
+        Reboot,
+        Crash,
+    }
 }

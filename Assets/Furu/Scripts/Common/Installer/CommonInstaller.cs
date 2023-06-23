@@ -1,6 +1,7 @@
 using Furu.Common.Data.Entity;
 using Furu.Common.Domain.Repository;
 using Furu.Common.Domain.UseCase;
+using Furu.Common.Presentation.Controller;
 using Furu.Common.Presentation.Presenter;
 using Furu.Common.Presentation.View;
 using VContainer;
@@ -23,12 +24,18 @@ namespace Furu.Common.Installer
             builder.Register<LoadingUseCase>(Lifetime.Singleton);
             builder.Register<SceneUseCase>(Lifetime.Singleton);
 
+            // Controller
+            builder.Register<ExceptionController>(Lifetime.Singleton);
+
             // Presenter
             builder.RegisterEntryPoint<LoadingPresenter>();
             builder.RegisterEntryPoint<ScenePresenter>();
 
             // View
+            builder.RegisterInstance<CrashView>(FindObjectOfType<CrashView>());
             builder.RegisterInstance<LoadingView>(FindObjectOfType<LoadingView>());
+            builder.RegisterInstance<RetryView>(FindObjectOfType<RetryView>());
+            builder.RegisterInstance<RebootView>(FindObjectOfType<RebootView>());
             builder.RegisterInstance<TransitionView>(FindObjectOfType<TransitionView>());
         }
     }
