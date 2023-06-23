@@ -37,5 +37,14 @@ namespace Furu.InGame.Presentation.View
 
             liquid.gameObject.SetActive(false);
         }
+
+        public void Splash()
+        {
+            DOTween.Sequence()
+                .Append(mask
+                    .DOLocalMoveY(0.75f, 1.0f)
+                    .SetEase(Ease.OutCirc)
+                    .SetLink(mask.gameObject));
+        }
     }
 }

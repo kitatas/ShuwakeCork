@@ -9,11 +9,13 @@ namespace Furu.InGame.Presentation.Controller
     {
         private readonly BottleView _bottleView;
         private readonly CorkView _corkView;
+        private readonly LiquidView _liquidView;
 
-        public BurstState(BottleView bottleView, CorkView corkView)
+        public BurstState(BottleView bottleView, CorkView corkView, LiquidView liquidView)
         {
             _bottleView = bottleView;
             _corkView = corkView;
+            _liquidView = liquidView;
         }
 
         public override GameState state => GameState.Burst;
@@ -30,6 +32,7 @@ namespace Furu.InGame.Presentation.Controller
             var angle = new Vector2(1.0f, 1.0f);
             _corkView.Shot(_bottleView.shakePower * 10.0f * angle);
             _bottleView.ShowSplash();
+            _liquidView.Splash();
 
             await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);
 
