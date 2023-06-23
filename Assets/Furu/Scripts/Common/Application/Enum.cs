@@ -5,4 +5,10 @@ namespace Furu.Common
         None,
         Main,
     }
+
+    public enum RankingType
+    {
+        None,
+        Distance,
+    }
 }

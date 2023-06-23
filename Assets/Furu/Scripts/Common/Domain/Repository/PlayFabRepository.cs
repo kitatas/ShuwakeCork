@@ -176,5 +176,39 @@ namespace Furu.Common.Domain.Repository
                 throw new RetryException(ExceptionConfig.FAILED_UPDATE_DATA);
             }
         }
+
+        public async UniTask<RankingRecordData> GetRankDataAsync(RankingType type, CancellationToken token)
+        {
+            var request = new GetLeaderboardRequest
+            {
+                StatisticName = type.ToRankingKey(),
+                ProfileConstraints = new PlayerProfileViewConstraints
+                {
+                    ShowDisplayName = true,
+                    ShowStatistics = true,
+                },
+                MaxResultsCount = PlayFabConfig.SHOW_MAX_RANKING,
+            };
+
+            var completionSource = new UniTaskCompletionSource<GetLeaderboardResult>();
+            PlayFabClientAPI.GetLeaderboard(
+                request,
+                result => completionSource.TrySetResult(result),
+                error => throw new RetryException(ExceptionConfig.FAILED_RESPONSE_DATA));
+
+            var response = await completionSource.Task;
+            if (response == null)
+            {
+                throw new RetryException(ExceptionConfig.FAILED_RESPONSE_DATA);
+            }
+
+            var leaderboard = response.Leaderboard;
+            if (leaderboard == null)
+            {
+                throw new RebootException(ExceptionConfig.NOT_FOUND_DATA);
+            }
+
+            return new RankingRecordData(leaderboard, type);
+        }
     }
 }
