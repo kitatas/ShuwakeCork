@@ -35,6 +35,7 @@ namespace Furu.InGame.Installer
             builder.Register<TitleState>(Lifetime.Scoped);
 
             // Presenter
+            builder.RegisterEntryPoint<ButtonPresenter>();
             builder.RegisterEntryPoint<StatePresenter>();
             builder.RegisterEntryPoint<TimePresenter>();
 

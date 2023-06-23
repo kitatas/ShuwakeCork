@@ -26,6 +26,7 @@ namespace Furu.Boot.Installer
             builder.Register<LoginState>(Lifetime.Scoped);
 
             // Presenter
+            builder.RegisterEntryPoint<ButtonPresenter>();
             builder.RegisterEntryPoint<StatePresenter>();
 
             // View
