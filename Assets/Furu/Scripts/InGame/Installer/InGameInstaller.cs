@@ -11,8 +11,10 @@ namespace Furu.InGame.Installer
     public sealed class InGameInstaller : LifetimeScope
     {
         [SerializeField] private RankingView rankingView = default;
+        [SerializeField] private AccountDeleteView accountDeleteView = default;
         [SerializeField] private BottleView bottleView = default;
         [SerializeField] private CorkView corkView = default;
+        [SerializeField] private NameInputView nameInputView;
         [SerializeField] private TimeView timeView = default;
         [SerializeField] private TitleView titleView = default;
         [SerializeField] private UserRecordView userRecordView = default;
@@ -23,6 +25,7 @@ namespace Furu.InGame.Installer
             builder.Register<RankingUseCase>(Lifetime.Scoped);
             builder.Register<StateUseCase>(Lifetime.Scoped);
             builder.Register<TimeUseCase>(Lifetime.Scoped);
+            builder.Register<UserDataUseCase>(Lifetime.Scoped);
             builder.Register<UserRecordUseCase>(Lifetime.Scoped);
 
             // Controller
@@ -34,6 +37,9 @@ namespace Furu.InGame.Installer
             builder.Register<SetUpState>(Lifetime.Scoped);
             builder.Register<TitleState>(Lifetime.Scoped);
 
+            // Controller
+            builder.RegisterEntryPoint<UserDataController>();
+
             // Presenter
             builder.RegisterEntryPoint<ButtonPresenter>();
             builder.RegisterEntryPoint<StatePresenter>();
@@ -41,8 +47,10 @@ namespace Furu.InGame.Installer
 
             // View
             builder.RegisterInstance<RankingView>(rankingView);
+            builder.RegisterInstance<AccountDeleteView>(accountDeleteView);
             builder.RegisterInstance<BottleView>(bottleView);
             builder.RegisterInstance<CorkView>(corkView);
+            builder.RegisterInstance<NameInputView>(nameInputView);
             builder.RegisterInstance<TimeView>(timeView);
             builder.RegisterInstance<TitleView>(titleView);
             builder.RegisterInstance<UserRecordView>(userRecordView);
