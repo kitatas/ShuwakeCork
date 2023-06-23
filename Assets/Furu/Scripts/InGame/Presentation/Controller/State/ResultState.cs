@@ -36,7 +36,7 @@ namespace Furu.InGame.Presentation.Controller
 
             await _rankingView.ReloadAsync(UiConfig.POPUP_TIME, token);
 
-            _sceneUseCase.Load(SceneName.Main);
+            _sceneUseCase.Load(SceneName.Main, LoadType.Fade);
 
             return GameState.None;
         }

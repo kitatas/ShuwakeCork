@@ -7,6 +7,13 @@ namespace Furu.Common
         Main,
     }
 
+    public enum LoadType
+    {
+        None,
+        Direct,
+        Fade,
+    }
+
     public enum RankingType
     {
         None,

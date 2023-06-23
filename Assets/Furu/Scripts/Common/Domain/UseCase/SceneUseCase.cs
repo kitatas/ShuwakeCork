@@ -1,22 +1,24 @@
 using System;
+using Furu.Common.Data.Entity;
 using UniRx;
 
 namespace Furu.Common.Domain.UseCase
 {
     public sealed class SceneUseCase
     {
-        private readonly Subject<SceneName> _load;
+        private readonly Subject<LoadEntity> _load;
 
         public SceneUseCase()
         {
-            _load = new Subject<SceneName>();
+            _load = new Subject<LoadEntity>();
         }
 
-        public IObservable<SceneName> load => _load.Where(x => x != SceneName.None);
+        public IObservable<LoadEntity> load => _load.Where(x => x.sceneName != SceneName.None);
 
-        public void Load(SceneName sceneName)
+        public void Load(SceneName sceneName, LoadType loadType)
         {
-            _load?.OnNext(sceneName);
+            var loadEntity = new LoadEntity(sceneName, loadType);
+            _load?.OnNext(loadEntity);
         }
     }
 }

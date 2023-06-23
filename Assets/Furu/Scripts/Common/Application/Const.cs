@@ -25,6 +25,11 @@ namespace Furu.Common
         public const float INIT_VOLUME = 5.0f;
     }
 
+    public sealed class SceneConfig
+    {
+        public const float FADE_TIME = 0.5f;
+    }
+
     public sealed class ExceptionConfig
     {
         // retry
@@ -38,6 +43,7 @@ namespace Furu.Common
 
         // crash
         public const string NOT_FOUND_STATE = "NOT_FOUND_STATE";
+        public const string UNMATCHED_LOAD_TYPE = "UNMATCHED_LOAD_TYPE";
         public const string UNMATCHED_RANKING_TYPE = "UNMATCHED_RANKING_TYPE";
     }
 }

@@ -2,6 +2,7 @@ using Furu.Common.Data.Entity;
 using Furu.Common.Domain.Repository;
 using Furu.Common.Domain.UseCase;
 using Furu.Common.Presentation.Presenter;
+using Furu.Common.Presentation.View;
 using VContainer;
 using VContainer.Unity;
 
@@ -23,6 +24,9 @@ namespace Furu.Common.Installer
 
             // Presenter
             builder.RegisterEntryPoint<ScenePresenter>();
+
+            // View
+            builder.RegisterInstance<TransitionView>(FindObjectOfType<TransitionView>());
         }
     }
 }

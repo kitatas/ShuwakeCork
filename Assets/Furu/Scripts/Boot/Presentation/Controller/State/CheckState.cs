@@ -32,7 +32,7 @@ namespace Furu.Boot.Presentation.Controller
             // TODO: WebGLではチェックしない
             await UniTask.Yield(token);
 
-            _sceneUseCase.Load(SceneName.Main);
+            _sceneUseCase.Load(SceneName.Main, LoadType.Direct);
             return BootState.None;
         }
     }

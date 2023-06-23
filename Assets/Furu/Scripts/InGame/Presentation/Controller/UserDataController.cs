@@ -33,7 +33,7 @@ namespace Furu.InGame.Presentation.Controller
             _accountDeleteView.DeleteDecision()
                 .Subscribe(_ =>
                 {
-                    _sceneUseCase.Load(SceneName.Boot);
+                    _sceneUseCase.Load(SceneName.Boot, LoadType.Fade);
                     _userDataUseCase.Delete();
                 })
                 .AddTo(_tokenSource.Token);
