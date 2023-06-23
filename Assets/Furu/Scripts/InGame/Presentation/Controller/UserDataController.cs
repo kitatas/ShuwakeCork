@@ -12,15 +12,17 @@ namespace Furu.InGame.Presentation.Controller
 {
     public sealed class UserDataController : IInitializable, IDisposable
     {
+        private readonly LoadingUseCase _loadingUseCase;
         private readonly SceneUseCase _sceneUseCase;
         private readonly UserDataUseCase _userDataUseCase;
         private readonly AccountDeleteView _accountDeleteView;
         private readonly NameInputView _nameInputView;
         private readonly CancellationTokenSource _tokenSource;
 
-        public UserDataController(SceneUseCase sceneUseCase, UserDataUseCase userDataUseCase,
-            AccountDeleteView accountDeleteView, NameInputView nameInputView)
+        public UserDataController(LoadingUseCase loadingUseCase, SceneUseCase sceneUseCase,
+            UserDataUseCase userDataUseCase, AccountDeleteView accountDeleteView, NameInputView nameInputView)
         {
+            _loadingUseCase = loadingUseCase;
             _sceneUseCase = sceneUseCase;
             _userDataUseCase = userDataUseCase;
             _accountDeleteView = accountDeleteView;
@@ -51,7 +53,11 @@ namespace Furu.InGame.Presentation.Controller
         {
             try
             {
+                _loadingUseCase.Set(true);
+
                 await _userDataUseCase.UpdateUserNameAsync(name, token);
+
+                _loadingUseCase.Set(false);
             }
             catch (Exception e)
             {

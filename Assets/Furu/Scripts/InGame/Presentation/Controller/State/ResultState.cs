@@ -9,12 +9,15 @@ namespace Furu.InGame.Presentation.Controller
 {
     public sealed class ResultState : BaseState
     {
+        private readonly LoadingUseCase _loadingUseCase;
         private readonly RankingUseCase _rankingUseCase;
         private readonly SceneUseCase _sceneUseCase;
         private readonly RankingView _rankingView;
 
-        public ResultState(RankingUseCase rankingUseCase, SceneUseCase sceneUseCase, RankingView rankingView)
+        public ResultState(LoadingUseCase loadingUseCase, RankingUseCase rankingUseCase, SceneUseCase sceneUseCase,
+            RankingView rankingView)
         {
+            _loadingUseCase = loadingUseCase;
             _rankingUseCase = rankingUseCase;
             _sceneUseCase = sceneUseCase;
             _rankingView = rankingView;
@@ -31,8 +34,12 @@ namespace Furu.InGame.Presentation.Controller
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
+            _loadingUseCase.Set(true);
+
             var records = await _rankingUseCase.GetDistanceRankingAsync(token);
             _rankingView.SetUp(records);
+
+            _loadingUseCase.Set(false);
 
             await _rankingView.ReloadAsync(UiConfig.POPUP_TIME, token);
 

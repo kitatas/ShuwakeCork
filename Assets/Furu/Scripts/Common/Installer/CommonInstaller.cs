@@ -20,12 +20,15 @@ namespace Furu.Common.Installer
             builder.Register<SaveRepository>(Lifetime.Singleton);
 
             // UseCase
+            builder.Register<LoadingUseCase>(Lifetime.Singleton);
             builder.Register<SceneUseCase>(Lifetime.Singleton);
 
             // Presenter
+            builder.RegisterEntryPoint<LoadingPresenter>();
             builder.RegisterEntryPoint<ScenePresenter>();
 
             // View
+            builder.RegisterInstance<LoadingView>(FindObjectOfType<LoadingView>());
             builder.RegisterInstance<TransitionView>(FindObjectOfType<TransitionView>());
         }
     }
