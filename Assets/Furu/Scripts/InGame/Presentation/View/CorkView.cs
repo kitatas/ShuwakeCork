@@ -16,16 +16,14 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Rigidbody2D rigidbody2d = default;
 
+        private readonly float _closeHeight = 1.068f;
+
         private bool _isGround;
         public float flyingDistance => transform.position.x;
 
         public void Init(Func<GameState, bool> isState)
         {
             // Hide
-            spriteRenderer
-                .DOFade(0.0f, 0.0f)
-                .SetEase(Ease.Linear)
-                .SetLink(gameObject);
             rigidbody2d.simulated = false;
 
             this.OnCollisionEnter2DAsObservable()
@@ -65,11 +63,11 @@ namespace Furu.InGame.Presentation.View
                 .AddTo(this);
         }
 
-        public async UniTask ShowAsync(float animationTime, CancellationToken token)
+        public async UniTask CloseAsync(float animationTime, CancellationToken token)
         {
-            await spriteRenderer
-                .DOFade(1.0f, animationTime)
-                .SetEase(Ease.Linear)
+            await transform
+                .DOLocalMoveY(_closeHeight, animationTime)
+                .SetEase(Ease.InCirc)
                 .SetLink(gameObject)
                 .WithCancellation(token);
         }

@@ -14,4 +14,11 @@ namespace Furu.InGame
     {
         public const string GROUND = "Ground";
     }
+
+    public sealed class BottleConfig
+    {
+        public const float POUR_TIME = 1.5f;
+        public const float CLOSE_TIME = 0.5f;
+        public const float VIBRATE_TIME = 0.1f;
+    }
 }

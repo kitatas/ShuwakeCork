@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Furu.Common;
@@ -11,12 +12,14 @@ namespace Furu.InGame.Presentation.Controller
         private readonly StateUseCase _stateUseCase;
         private readonly BottleView _bottleView;
         private readonly CorkView _corkView;
+        private readonly LiquidView _liquidView;
 
-        public SetUpState(StateUseCase stateUseCase, BottleView bottleView, CorkView corkView)
+        public SetUpState(StateUseCase stateUseCase, BottleView bottleView, CorkView corkView, LiquidView liquidView)
         {
             _stateUseCase = stateUseCase;
             _bottleView = bottleView;
             _corkView = corkView;
+            _liquidView = liquidView;
         }
 
         public override GameState state => GameState.SetUp;
@@ -31,10 +34,19 @@ namespace Furu.InGame.Presentation.Controller
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            await (
-                _bottleView.ShowAsync(UiConfig.ANIMATION_TIME, token),
-                _corkView.ShowAsync(UiConfig.ANIMATION_TIME, token)
-            );
+            // ボトルに注ぐ
+            await _liquidView.PourAsync(BottleConfig.POUR_TIME, token);
+            await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+
+            // 栓をする
+            await _corkView.CloseAsync(BottleConfig.CLOSE_TIME, token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
+
+            await _bottleView.VibrateAsync(BottleConfig.VIBRATE_TIME, token);
+            await UniTask.Delay(TimeSpan.FromSeconds(0.5f), cancellationToken: token);
+
+            // 傾ける
+            await _bottleView.RotateAsync(UiConfig.ANIMATION_TIME, token);
 
             return GameState.Input;
         }

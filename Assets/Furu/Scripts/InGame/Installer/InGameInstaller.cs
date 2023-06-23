@@ -14,6 +14,7 @@ namespace Furu.InGame.Installer
         [SerializeField] private AccountDeleteView accountDeleteView = default;
         [SerializeField] private BottleView bottleView = default;
         [SerializeField] private CorkView corkView = default;
+        [SerializeField] private LiquidView liquidView = default;
         [SerializeField] private NameInputView nameInputView;
         [SerializeField] private TimeView timeView = default;
         [SerializeField] private TitleView titleView = default;
@@ -50,6 +51,7 @@ namespace Furu.InGame.Installer
             builder.RegisterInstance<AccountDeleteView>(accountDeleteView);
             builder.RegisterInstance<BottleView>(bottleView);
             builder.RegisterInstance<CorkView>(corkView);
+            builder.RegisterInstance<LiquidView>(liquidView);
             builder.RegisterInstance<NameInputView>(nameInputView);
             builder.RegisterInstance<TimeView>(timeView);
             builder.RegisterInstance<TitleView>(titleView);

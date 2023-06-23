@@ -37,24 +37,32 @@ namespace Furu.InGame.Presentation.View
                 })
                 .AddTo(this);
 
-            // Hide
-            spriteRenderer
-                .DOFade(0.0f, 0.0f)
-                .SetEase(Ease.Linear)
-                .SetLink(gameObject);
-            collider2d.enabled = false;
             splash.Stop();
         }
 
-        public async UniTask ShowAsync(float animationTime, CancellationToken token)
+        public async UniTask VibrateAsync(float animationTime, CancellationToken token)
         {
-            await spriteRenderer
-                .DOFade(1.0f, animationTime)
+            await DOTween.Sequence()
+                .Append(transform
+                    .DOLocalMoveX(-0.1f, animationTime))
+                .Append(transform
+                    .DOLocalMoveX(0.1f, animationTime))
+                .Append(transform
+                    .DOLocalMoveX(-0.1f, animationTime))
+                .Append(transform
+                    .DOLocalMoveX(0.0f, animationTime))
                 .SetEase(Ease.Linear)
                 .SetLink(gameObject)
                 .WithCancellation(token);
+        }
 
-            collider2d.enabled = true;
+        public async UniTask RotateAsync(float animationTime, CancellationToken token)
+        {
+            await transform
+                .DOLocalRotate(new Vector3(0.0f, 0.0f, -45.0f), animationTime)
+                .SetEase(Ease.Linear)
+                .SetLink(gameObject)
+                .WithCancellation(token);
         }
 
         public void OnDrag(PointerEventData eventData)
