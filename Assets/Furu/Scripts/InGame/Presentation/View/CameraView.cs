@@ -15,5 +15,7 @@ namespace Furu.InGame.Presentation.View
         {
             transform.position = new Vector3(x, 0.0f, -10.0f);
         }
+
+        public float x => transform.position.x;
     }
 }
