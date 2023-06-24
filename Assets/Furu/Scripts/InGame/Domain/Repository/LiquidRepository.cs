@@ -1,20 +1,16 @@
 using Furu.InGame.Data.DataStore;
 using UniEx;
-using UnityEngine.AddressableAssets;
 using UnityEngine;
 
 namespace Furu.InGame.Domain.Repository
 {
     public sealed class LiquidRepository
     {
-        private LiquidTable _liquidTable;
+        private readonly LiquidTable _liquidTable;
 
-        public LiquidRepository()
+        public LiquidRepository(TextAsset liquidMaster)
         {
-            Addressables.LoadAssetAsync<TextAsset>(GetKey("liquid")).Completed += x =>
-            {
-                _liquidTable = JsonUtility.FromJson<LiquidTable>(x.Result.text);
-            };
+            _liquidTable = JsonUtility.FromJson<LiquidTable>(liquidMaster.text);
         }
 
         private static string GetKey(string jsonName)

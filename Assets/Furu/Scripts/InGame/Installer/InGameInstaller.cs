@@ -11,6 +11,8 @@ namespace Furu.InGame.Installer
 {
     public sealed class InGameInstaller : LifetimeScope
     {
+        [SerializeField] private TextAsset liquidMaster = default;
+
         [SerializeField] private BonusView bonusView = default;
         [SerializeField] private RankingView rankingView = default;
         [SerializeField] private AccountDeleteView accountDeleteView = default;
@@ -28,7 +30,7 @@ namespace Furu.InGame.Installer
         protected override void Configure(IContainerBuilder builder)
         {
             // Repository
-            builder.Register<LiquidRepository>(Lifetime.Scoped);
+            builder.Register<LiquidRepository>(Lifetime.Scoped).WithParameter(liquidMaster);
 
             // UseCase
             builder.Register<LiquidUseCase>(Lifetime.Scoped);
