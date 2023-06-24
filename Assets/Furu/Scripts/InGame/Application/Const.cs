@@ -9,6 +9,8 @@ namespace Furu.InGame
 
         public const float SHAKE_TIME = 5.0f;
         public const float ANGLE_TIME = 5.0f;
+
+        public const int PLAY_BONUS = 3;
     }
 
     public sealed class TagConfig

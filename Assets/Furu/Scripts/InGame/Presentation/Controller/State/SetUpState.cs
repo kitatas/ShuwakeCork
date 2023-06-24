@@ -12,17 +12,22 @@ namespace Furu.InGame.Presentation.Controller
         private readonly LiquidUseCase _liquidUseCase;
         private readonly StateUseCase _stateUseCase;
         private readonly TimeUseCase _timeUseCase;
+        private readonly UserDataUseCase _userDataUseCase;
         private readonly BottleView _bottleView;
+        private readonly CandyView _candyView;
         private readonly CorkView _corkView;
         private readonly LiquidView _liquidView;
 
         public SetUpState(LiquidUseCase liquidUseCase, StateUseCase stateUseCase, TimeUseCase timeUseCase,
-            BottleView bottleView, CorkView corkView, LiquidView liquidView)
+            UserDataUseCase userDataUseCase, BottleView bottleView, CandyView candyView, CorkView corkView,
+            LiquidView liquidView)
         {
             _liquidUseCase = liquidUseCase;
             _stateUseCase = stateUseCase;
             _timeUseCase = timeUseCase;
+            _userDataUseCase = userDataUseCase;
             _bottleView = bottleView;
+            _candyView = candyView;
             _corkView = corkView;
             _liquidView = liquidView;
         }
@@ -46,6 +51,17 @@ namespace Furu.InGame.Presentation.Controller
             // ボトルに注ぐ
             await _liquidView.PourAsync(BottleConfig.POUR_TIME, token);
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+
+            // ボーナス
+            if (_userDataUseCase.GetPlayCount() >= GameConfig.PLAY_BONUS)
+            {
+                await _candyView.ThrowAsync(BottleConfig.POUR_TIME, token);
+                await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
+            }
+            else
+            {
+                _candyView.Activate(false);
+            }
 
             // 栓をする
             await _corkView.CloseAsync(BottleConfig.TEMP_CLOSE_HEIGHT, BottleConfig.CLOSE_TIME, token);

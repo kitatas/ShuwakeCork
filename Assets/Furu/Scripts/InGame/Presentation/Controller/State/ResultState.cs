@@ -52,7 +52,7 @@ namespace Furu.InGame.Presentation.Controller
             await _rankingView.ReloadAsync(UiConfig.POPUP_TIME, token);
 
             // プレイボーナス
-            if (_userDataUseCase.GetPlayCount() == 3)
+            if (_userDataUseCase.GetPlayCount() == GameConfig.PLAY_BONUS)
             {
                 await _bonusView.PopAsync(UiConfig.POPUP_TIME, token);
             }
