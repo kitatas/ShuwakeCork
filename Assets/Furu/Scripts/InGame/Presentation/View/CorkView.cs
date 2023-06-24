@@ -16,8 +16,6 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Rigidbody2D rigidbody2d = default;
 
-        private readonly float _closeHeight = 1.068f;
-
         private bool _isGround;
         public float flyingDistance => transform.position.x;
 
@@ -63,10 +61,10 @@ namespace Furu.InGame.Presentation.View
                 .AddTo(this);
         }
 
-        public async UniTask CloseAsync(float animationTime, CancellationToken token)
+        public async UniTask CloseAsync(float closeHeight, float animationTime, CancellationToken token)
         {
             await transform
-                .DOLocalMoveY(_closeHeight, animationTime)
+                .DOLocalMoveY(closeHeight, animationTime)
                 .SetEase(Ease.InCirc)
                 .SetLink(gameObject)
                 .WithCancellation(token);

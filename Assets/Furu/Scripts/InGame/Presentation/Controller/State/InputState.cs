@@ -31,7 +31,7 @@ namespace Furu.InGame.Presentation.Controller
                 }
 
                 var deltaTime = Time.deltaTime;
-                _timeUseCase.Decrease(deltaTime);
+                _timeUseCase.Decrease(deltaTime, GameConfig.SHAKE_TIME);
 
                 await UniTask.Yield(token);
             }

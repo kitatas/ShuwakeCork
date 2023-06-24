@@ -1,3 +1,6 @@
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using Furu.Base.Domain.UseCase;
 using UniEx;
 using UnityEngine;
@@ -8,12 +11,24 @@ namespace Furu.InGame.Domain.UseCase
     {
         public TimeUseCase()
         {
-            Set(GameConfig.SHAKE_TIME);
+            Set(0.0f);
         }
 
-        public void Decrease(float deltaTime)
+        public async UniTask IncreaseAsync(float animationTime, CancellationToken token)
         {
-            Set(Mathf.Max(property.Value - deltaTime, 0.0f));
+            await DOTween.To(
+                    () => property.Value,
+                    x => Set(x),
+                    1.0f,
+                    animationTime)
+                .SetEase(Ease.OutQuart)
+                .WithCancellation(token);
+        }
+
+        public void Decrease(float deltaTime, float fullTime)
+        {
+            var time = property.Value - (deltaTime / fullTime);
+            Set(Mathf.Max(time, 0.0f));
         }
 
         public bool IsTimeUp()

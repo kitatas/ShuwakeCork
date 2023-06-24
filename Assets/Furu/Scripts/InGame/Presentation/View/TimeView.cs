@@ -1,16 +1,16 @@
 using Furu.Base.Presentation.View;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Furu.InGame.Presentation.View
 {
     public sealed class TimeView : BaseView<float>
     {
-        [SerializeField] private TextMeshProUGUI time = default;
+        [SerializeField] private Image image = default;
 
         public override void Render(float value)
         {
-            time.text = $"{value.ToString("F2")}";
+            image.fillAmount = value;
         }
     }
 }
