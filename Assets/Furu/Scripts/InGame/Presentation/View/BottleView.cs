@@ -13,9 +13,6 @@ namespace Furu.InGame.Presentation.View
     {
         [SerializeField] private CameraView cameraView = default;
 
-        [SerializeField] private SpriteRenderer spriteRenderer = default;
-        [SerializeField] private Collider2D collider2d = default;
-
         private Func<GameState, bool> _isState;
         private Subject<Vector3> _dragPosition;
         public float shakePower { get; private set; }

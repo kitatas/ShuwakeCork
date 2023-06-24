@@ -13,7 +13,6 @@ namespace Furu.InGame.Presentation.View
     {
         [SerializeField] private CameraView cameraView = default;
 
-        [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Rigidbody2D rigidbody2d = default;
 
         private bool _isGround;
