@@ -28,4 +28,10 @@ namespace Furu.Common
         Reboot,
         Crash,
     }
+
+    public enum BgmType
+    {
+        None,
+        Title,
+    }
 }
