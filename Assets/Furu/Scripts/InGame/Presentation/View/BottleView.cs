@@ -15,7 +15,6 @@ namespace Furu.InGame.Presentation.View
 
         [SerializeField] private SpriteRenderer spriteRenderer = default;
         [SerializeField] private Collider2D collider2d = default;
-        [SerializeField] private ParticleSystem splash = default;
 
         private Func<GameState, bool> _isState;
         private Subject<Vector3> _dragPosition;
@@ -36,8 +35,6 @@ namespace Furu.InGame.Presentation.View
                     shakePower += x.Current.GetLength(x.Previous);
                 })
                 .AddTo(this);
-
-            splash.Stop();
         }
 
         public async UniTask VibrateAsync(float animationTime, CancellationToken token)
@@ -87,11 +84,6 @@ namespace Furu.InGame.Presentation.View
                 .SetEase(Ease.Linear)
                 .SetLink(gameObject)
                 .WithCancellation(token);
-        }
-
-        public void ShowSplash()
-        {
-            splash.Play();
         }
 
         public void SyncAngle(float z)

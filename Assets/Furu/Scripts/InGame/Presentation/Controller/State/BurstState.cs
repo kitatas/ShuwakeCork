@@ -30,8 +30,8 @@ namespace Furu.InGame.Presentation.Controller
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
             // TODO: 発射演出
+            Debug.Log($"totalPower: {_bottleView.shakePower}");
             _corkView.Shot(_bottleView.shakePower * 10.0f * _arrowView.direction);
-            _bottleView.ShowSplash();
             _liquidView.Splash();
 
             await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);

@@ -9,15 +9,17 @@ namespace Furu.InGame.Presentation.Controller
 {
     public sealed class SetUpState : BaseState
     {
+        private readonly LiquidUseCase _liquidUseCase;
         private readonly StateUseCase _stateUseCase;
         private readonly TimeUseCase _timeUseCase;
         private readonly BottleView _bottleView;
         private readonly CorkView _corkView;
         private readonly LiquidView _liquidView;
 
-        public SetUpState(StateUseCase stateUseCase, TimeUseCase timeUseCase, BottleView bottleView, CorkView corkView,
-            LiquidView liquidView)
+        public SetUpState(LiquidUseCase liquidUseCase, StateUseCase stateUseCase, TimeUseCase timeUseCase,
+            BottleView bottleView, CorkView corkView, LiquidView liquidView)
         {
+            _liquidUseCase = liquidUseCase;
             _stateUseCase = stateUseCase;
             _timeUseCase = timeUseCase;
             _bottleView = bottleView;
@@ -31,12 +33,16 @@ namespace Furu.InGame.Presentation.Controller
         {
             _bottleView.Init(_stateUseCase.IsState);
             _corkView.Init(_stateUseCase.IsState);
+            _liquidView.Init();
 
             await UniTask.Yield(token);
         }
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
+            var liquid = _liquidUseCase.Lot();
+            _liquidView.SetUp(liquid);
+
             // ボトルに注ぐ
             await _liquidView.PourAsync(BottleConfig.POUR_TIME, token);
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);

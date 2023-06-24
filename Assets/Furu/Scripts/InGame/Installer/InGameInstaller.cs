@@ -1,3 +1,4 @@
+using Furu.InGame.Domain.Repository;
 using Furu.InGame.Domain.UseCase;
 using Furu.InGame.Presentation.Controller;
 using Furu.InGame.Presentation.Presenter;
@@ -24,7 +25,11 @@ namespace Furu.InGame.Installer
 
         protected override void Configure(IContainerBuilder builder)
         {
+            // Repository
+            builder.Register<LiquidRepository>(Lifetime.Scoped);
+
             // UseCase
+            builder.Register<LiquidUseCase>(Lifetime.Scoped);
             builder.Register<RankingUseCase>(Lifetime.Scoped);
             builder.Register<StateUseCase>(Lifetime.Scoped);
             builder.Register<TimeUseCase>(Lifetime.Scoped);

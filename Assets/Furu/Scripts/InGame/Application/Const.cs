@@ -25,4 +25,10 @@ namespace Furu.InGame
         public const float TEMP_CLOSE_HEIGHT = 1.2f;
         public const float CLOSE_HEIGHT = 1.068f;
     }
+
+    public sealed class ResourceConfig
+    {
+        public const string BASE_PATH = "Assets/Furu/";
+        public const string JSON_PATH = BASE_PATH + "Master/Json/";
+    }
 }
