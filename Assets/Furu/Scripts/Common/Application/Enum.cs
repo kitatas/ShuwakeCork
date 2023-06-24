@@ -38,5 +38,6 @@ namespace Furu.Common
     public enum SeType
     {
         None,
+        Decision,
     }
 }

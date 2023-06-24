@@ -19,6 +19,7 @@ namespace Furu.InGame.Installer
         [SerializeField] private TimeView timeView = default;
         [SerializeField] private TitleView titleView = default;
         [SerializeField] private UserRecordView userRecordView = default;
+        [SerializeField] private VolumeView volumeView = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
@@ -56,6 +57,7 @@ namespace Furu.InGame.Installer
             builder.RegisterInstance<TimeView>(timeView);
             builder.RegisterInstance<TitleView>(titleView);
             builder.RegisterInstance<UserRecordView>(userRecordView);
+            builder.RegisterInstance<VolumeView>(volumeView);
         }
     }
 }
