@@ -68,10 +68,7 @@ namespace Furu.InGame.Presentation.View
             if (isState.HasValue && isState.Value)
             {
                 var position = cameraView.GetWorldPoint(eventData.position);
-                position
-                    .ClampX(-2.0f, 2.0f)
-                    .ClampY(-2.0f, 2.0f)
-                    .SetZ(0.0f);
+                position.SetZ(0.0f);
                 transform.position = position;
                 _dragPosition?.OnNext(position);
             }
