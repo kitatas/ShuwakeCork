@@ -12,14 +12,18 @@ namespace Furu.InGame.Presentation.Controller
         private readonly LoadingUseCase _loadingUseCase;
         private readonly RankingUseCase _rankingUseCase;
         private readonly SceneUseCase _sceneUseCase;
+        private readonly UserDataUseCase _userDataUseCase;
+        private readonly BonusView _bonusView;
         private readonly RankingView _rankingView;
 
         public ResultState(LoadingUseCase loadingUseCase, RankingUseCase rankingUseCase, SceneUseCase sceneUseCase,
-            RankingView rankingView)
+            UserDataUseCase userDataUseCase, BonusView bonusView, RankingView rankingView)
         {
             _loadingUseCase = loadingUseCase;
             _rankingUseCase = rankingUseCase;
             _sceneUseCase = sceneUseCase;
+            _userDataUseCase = userDataUseCase;
+            _bonusView = bonusView;
             _rankingView = rankingView;
         }
 
@@ -27,6 +31,7 @@ namespace Furu.InGame.Presentation.Controller
 
         public override async UniTask InitAsync(CancellationToken token)
         {
+            _bonusView.HideAsync(0.0f, token).Forget();
             _rankingView.HideAsync(0.0f, token).Forget();
 
             await UniTask.Yield(token);
@@ -45,6 +50,12 @@ namespace Furu.InGame.Presentation.Controller
             _loadingUseCase.Set(false);
 
             await _rankingView.ReloadAsync(UiConfig.POPUP_TIME, token);
+
+            // プレイボーナス
+            if (_userDataUseCase.GetPlayCount() == 3)
+            {
+                await _bonusView.PopAsync(UiConfig.POPUP_TIME, token);
+            }
 
             _sceneUseCase.Load(SceneName.Main, LoadType.Fade);
 

@@ -24,6 +24,11 @@ namespace Furu.InGame.Domain.UseCase
             return _userEntity.userName;
         }
 
+        public int GetPlayCount()
+        {
+            return _userEntity.playEntity.playCount;
+        }
+
         public async UniTask<bool> UpdateUserNameAsync(string name, CancellationToken token)
         {
             var isSuccess = await _playFabRepository.UpdateUserNameAsync(name, token);

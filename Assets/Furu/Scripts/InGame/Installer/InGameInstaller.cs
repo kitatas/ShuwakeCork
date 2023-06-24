@@ -11,6 +11,7 @@ namespace Furu.InGame.Installer
 {
     public sealed class InGameInstaller : LifetimeScope
     {
+        [SerializeField] private BonusView bonusView = default;
         [SerializeField] private RankingView rankingView = default;
         [SerializeField] private AccountDeleteView accountDeleteView = default;
         [SerializeField] private ArrowView arrowView = default;
@@ -55,6 +56,7 @@ namespace Furu.InGame.Installer
             builder.RegisterEntryPoint<TimePresenter>();
 
             // View
+            builder.RegisterInstance<BonusView>(bonusView);
             builder.RegisterInstance<RankingView>(rankingView);
             builder.RegisterInstance<AccountDeleteView>(accountDeleteView);
             builder.RegisterInstance<ArrowView>(arrowView);
