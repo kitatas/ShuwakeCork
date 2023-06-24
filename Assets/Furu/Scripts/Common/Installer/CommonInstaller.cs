@@ -14,11 +14,13 @@ namespace Furu.Common.Installer
     public sealed class CommonInstaller : LifetimeScope
     {
         [SerializeField] private BgmTable bgmTable = default;
+        [SerializeField] private SeTable seTable = default;
 
         protected override void Configure(IContainerBuilder builder)
         {
             // DataStore
             builder.RegisterInstance<BgmTable>(bgmTable);
+            builder.RegisterInstance<SeTable>(seTable);
 
             // Entity
             builder.Register<UserEntity>(Lifetime.Singleton);

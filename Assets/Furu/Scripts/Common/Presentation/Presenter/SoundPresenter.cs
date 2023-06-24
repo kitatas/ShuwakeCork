@@ -21,6 +21,10 @@ namespace Furu.Common.Presentation.Presenter
             _soundUseCase.playBgm
                 .Subscribe(_soundView.PlayBgm)
                 .AddTo(_soundView);
+
+            _soundUseCase.playSe
+                .Subscribe(_soundView.PlaySe)
+                .AddTo(_soundView);
         }
 
         public void Start()

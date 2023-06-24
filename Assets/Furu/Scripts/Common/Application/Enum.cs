@@ -34,4 +34,9 @@ namespace Furu.Common
         None,
         Title,
     }
+
+    public enum SeType
+    {
+        None,
+    }
 }
