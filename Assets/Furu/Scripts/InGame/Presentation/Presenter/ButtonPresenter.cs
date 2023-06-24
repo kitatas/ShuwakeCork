@@ -22,7 +22,7 @@ namespace Furu.InGame.Presentation.Presenter
         {
             foreach (var buttonView in Object.FindObjectsOfType<BaseButtonView>())
             {
-                buttonView.Init();
+                buttonView.Init(_soundUseCase.PlaySe);
             }
 
             _volumeView.Init(_soundUseCase.bgmVolumeValue, _soundUseCase.seVolumeValue);
