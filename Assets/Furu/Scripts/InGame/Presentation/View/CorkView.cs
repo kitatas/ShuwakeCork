@@ -17,6 +17,7 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private Rigidbody2D rigidbody2d = default;
 
         private bool _isGround;
+        public float height { get; private set; } = 0.0f;
         public float flyingDistance => transform.position.x;
 
         public void Init(Func<GameState, bool> isState)
@@ -41,6 +42,11 @@ namespace Furu.InGame.Presentation.View
                 .Pairwise()
                 .Subscribe(x =>
                 {
+                    if (height < x.Current.y)
+                    {
+                        height = x.Current.y;
+                    }
+
                     var direction = x.Current - x.Previous;
                     var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 

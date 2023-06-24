@@ -6,6 +6,7 @@ namespace Furu.Common.Data.Entity
     {
         public int playCount;
         public RecordEntity distance;
+        public RecordEntity height;
 
         public static UserPlayEntity Default()
         {
@@ -13,15 +14,17 @@ namespace Furu.Common.Data.Entity
             {
                 playCount = 0,
                 distance = RecordEntity.Default(),
+                height = RecordEntity.Default(),
             };
         }
 
-        public UserPlayEntity UpdateByPlay(float distanceScore)
+        public UserPlayEntity UpdateByPlay(float distanceScore, float heightScore)
         {
             return new UserPlayEntity
             {
                 playCount = playCount + 1,
                 distance = distance.Update(distanceScore),
+                height = height.Update(heightScore),
             };
         }
 

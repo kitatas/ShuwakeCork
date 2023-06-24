@@ -10,6 +10,7 @@ namespace Furu.Common
     {
         public const string TITLE_ID = "";
         public const string RANKING_DISTANCE_KEY = "";
+        public const string RANKING_HEIGHT_KEY = "";
         public const string USER_PLAY_RECORD_KEY = "";
         public const int SCORE_RATE = 10000;
         public const int SHOW_MAX_RANKING = 50;

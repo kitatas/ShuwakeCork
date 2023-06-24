@@ -36,8 +36,11 @@ namespace Furu.InGame.Presentation.Controller
         {
             _loadingUseCase.Set(true);
 
-            var records = await _rankingUseCase.GetDistanceRankingAsync(token);
-            _rankingView.SetUp(records);
+            var (distanceRecords, heightRecords) = await (
+                _rankingUseCase.GetDistanceRankingAsync(token),
+                _rankingUseCase.GetHeightRankingAsync(token)
+            );
+            _rankingView.SetUp(distanceRecords, heightRecords);
 
             _loadingUseCase.Set(false);
 

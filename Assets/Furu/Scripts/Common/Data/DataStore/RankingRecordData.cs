@@ -27,5 +27,17 @@ namespace Furu.Common.Data.DataStore
                 .Select(x => new DistanceRecordEntity(x, userId))
                 .ToList();
         }
+
+        public List<HeightRecordEntity> GetHeightRanking(string userId)
+        {
+            if (_type != RankingType.Height)
+            {
+                throw new CrashException(ExceptionConfig.UNMATCHED_RANKING_TYPE);
+            }
+
+            return _leaderboard
+                .Select(x => new HeightRecordEntity(x, userId))
+                .ToList();
+        }
     }
 }

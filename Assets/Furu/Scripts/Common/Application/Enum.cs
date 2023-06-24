@@ -18,6 +18,7 @@ namespace Furu.Common
     {
         None,
         Distance,
+        Height,
     }
 
     public enum ExceptionType

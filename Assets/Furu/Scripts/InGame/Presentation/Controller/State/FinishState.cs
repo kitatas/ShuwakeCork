@@ -32,13 +32,15 @@ namespace Furu.InGame.Presentation.Controller
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
             _loadingUseCase.Set(true);
-            
+
             // ユーザーの記録更新 + ランキング送信
             var distance = _corkView.flyingDistance;
-            await _userRecordUseCase.SendScoreAsync(distance, token);
+            var height = _corkView.height;
+            await _userRecordUseCase.SendScoreAsync(distance, height, token);
 
-            var (distanceRecord, _) = _userRecordUseCase.GetUserScore();
+            var (distanceRecord, heightRecord) = _userRecordUseCase.GetUserScore();
             _userRecordView.SetDistanceScore(distanceRecord.current, distanceRecord.high);
+            _userRecordView.SetHeightScore(heightRecord.current, heightRecord.high);
 
             // ランキング反映待ち
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);

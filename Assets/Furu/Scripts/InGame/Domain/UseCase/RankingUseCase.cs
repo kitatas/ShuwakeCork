@@ -23,5 +23,11 @@ namespace Furu.InGame.Domain.UseCase
             var recordData = await _playFabRepository.GetRankDataAsync(RankingType.Distance, token);
             return recordData.GetDistanceRanking(_userEntity.userId);
         }
+        
+        public async UniTask<List<HeightRecordEntity>> GetHeightRankingAsync(CancellationToken token)
+        {
+            var recordData = await _playFabRepository.GetRankDataAsync(RankingType.Height, token);
+            return recordData.GetHeightRanking(_userEntity.userId);
+        }
     }
 }

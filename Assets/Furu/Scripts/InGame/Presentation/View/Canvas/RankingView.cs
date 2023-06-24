@@ -8,16 +8,24 @@ namespace Furu.InGame.Presentation.View
 {
     public sealed class RankingView : BaseCanvasGroupView
     {
-        [SerializeField] private RectTransform viewport = default;
+        [SerializeField] private RectTransform distanceViewport = default;
+        [SerializeField] private RectTransform heightViewport = default;
         [SerializeField] private RankingRecordView recordView = default;
 
         [SerializeField] private ReloadButtonView reloadButtonView = default;
 
-        public void SetUp(List<Common.Data.Entity.DistanceRecordEntity> recordEntities)
+        public void SetUp(List<Common.Data.Entity.DistanceRecordEntity> distanceRecords,
+            List<Common.Data.Entity.HeightRecordEntity> heightRecords)
         {
-            foreach (var entity in recordEntities)
+            foreach (var entity in distanceRecords)
             {
-                var record = Instantiate(recordView, viewport);
+                var record = Instantiate(recordView, distanceViewport);
+                record.SetData(entity);
+            }
+
+            foreach (var entity in heightRecords)
+            {
+                var record = Instantiate(recordView, heightViewport);
                 record.SetData(entity);
             }
         }

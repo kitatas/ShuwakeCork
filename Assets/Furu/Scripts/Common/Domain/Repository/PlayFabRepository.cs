@@ -150,16 +150,23 @@ namespace Furu.Common.Domain.Repository
             }
         }
 
-        public async UniTask SendToDistanceRankingAsync(Data.Entity.UserPlayEntity playEntity, CancellationToken token)
+        public async UniTask SendRankingAsync(RankingType type, Data.Entity.UserPlayEntity playEntity, CancellationToken token)
         {
+            var value = type switch
+            {
+                RankingType.Distance => playEntity.distance.GetCurrentForRanking(),
+                RankingType.Height   => playEntity.height.GetCurrentForRanking(),
+                _ => throw new CrashException(ExceptionConfig.UNMATCHED_RANKING_TYPE),
+            };
+
             var request = new UpdatePlayerStatisticsRequest
             {
                 Statistics = new List<StatisticUpdate>
                 {
                     new StatisticUpdate
                     {
-                        StatisticName = PlayFabConfig.RANKING_DISTANCE_KEY,
-                        Value = playEntity.distance.GetCurrentForRanking(),
+                        StatisticName = type.ToRankingKey(),
+                        Value = value,
                     },
                 },
             };

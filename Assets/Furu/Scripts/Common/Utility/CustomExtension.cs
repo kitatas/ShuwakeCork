@@ -7,6 +7,7 @@ namespace Furu.Common
             return type switch
             {
                 RankingType.Distance => PlayFabConfig.RANKING_DISTANCE_KEY,
+                RankingType.Height   => PlayFabConfig.RANKING_HEIGHT_KEY,
                 _ => throw new CrashException(ExceptionConfig.UNMATCHED_RANKING_TYPE),
             };
         }
