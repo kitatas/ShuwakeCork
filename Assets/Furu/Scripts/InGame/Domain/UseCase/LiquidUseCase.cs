@@ -21,5 +21,10 @@ namespace Furu.InGame.Domain.UseCase
             _liquidEntity = _liquidRepository.Lot(_userEntity.playEntity.playCount);
             return _liquidEntity;
         }
+
+        public string GetLiquidName()
+        {
+            return _liquidEntity.name;
+        }
     }
 }

@@ -10,13 +10,16 @@ namespace Furu.InGame.Presentation.Controller
     public sealed class FinishState : BaseState
     {
         private readonly LoadingUseCase _loadingUseCase;
+        private readonly LiquidUseCase _liquidUseCase;
         private readonly UserRecordUseCase _userRecordUseCase;
         private readonly CorkView _corkView;
         private readonly UserRecordView _userRecordView;
 
-        public FinishState(LoadingUseCase loadingUseCase, UserRecordUseCase userRecordUseCase, CorkView corkView, UserRecordView userRecordView)
+        public FinishState(LoadingUseCase loadingUseCase, LiquidUseCase liquidUseCase,
+            UserRecordUseCase userRecordUseCase, CorkView corkView, UserRecordView userRecordView)
         {
             _loadingUseCase = loadingUseCase;
+            _liquidUseCase = liquidUseCase;
             _userRecordUseCase = userRecordUseCase;
             _corkView = corkView;
             _userRecordView = userRecordView;
@@ -39,8 +42,9 @@ namespace Furu.InGame.Presentation.Controller
             await _userRecordUseCase.SendScoreAsync(distance, height, token);
 
             var (distanceRecord, heightRecord) = _userRecordUseCase.GetUserScore();
-            _userRecordView.SetDistanceScore(distanceRecord.current, distanceRecord.high);
-            _userRecordView.SetHeightScore(heightRecord.current, heightRecord.high);
+            var liquidName = _liquidUseCase.GetLiquidName();
+            _userRecordView.SetDistanceScore(distanceRecord.current, distanceRecord.high, liquidName);
+            _userRecordView.SetHeightScore(heightRecord.current, heightRecord.high, liquidName);
 
             // ランキング反映待ち
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);

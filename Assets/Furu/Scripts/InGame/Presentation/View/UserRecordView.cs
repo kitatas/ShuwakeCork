@@ -12,12 +12,12 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private TextMeshProUGUI currentHeight = default;
         [SerializeField] private TextMeshProUGUI highHeight = default;
         [SerializeField] private TweetButtonView heightTweetButton = default;
-        
-        public void SetDistanceScore(float current, float high)
+
+        public void SetDistanceScore(float current, float high, string liquidName)
         {
             SetCurrentScore(current);
             SetHighScore(high);
-            distanceTweetButton.SetUpDistanceTweet(current);
+            distanceTweetButton.SetUpDistanceTweet(current, liquidName);
         }
 
         private void SetCurrentScore(float value)
@@ -29,12 +29,12 @@ namespace Furu.InGame.Presentation.View
         {
             highScore.text = $"{value.ToString("F2")}";
         }
-        
-        public void SetHeightScore(float current, float high)
+
+        public void SetHeightScore(float current, float high, string liquidName)
         {
             SetCurrentHeight(current);
             SetHighHeight(high);
-            heightTweetButton.SetUpHeightTweet(current);
+            heightTweetButton.SetUpHeightTweet(current, liquidName);
         }
 
         private void SetCurrentHeight(float value)

@@ -6,9 +6,9 @@ namespace Furu.InGame.Presentation.View
 {
     public sealed class TweetButtonView : BaseButtonView
     {
-        public void SetUpDistanceTweet(float value)
+        public void SetUpDistanceTweet(float value, string liquidName)
         {
-            var tweetText = $"{value.ToString("F2")}m 吹っ飛ばした！\n";
+            var tweetText = $"{liquidName}で距離 {value.ToString("F2")}m 吹っ飛ばした！\n";
 #if UNITY_WEBGL
             tweetText += $"#{GameConfig.GAME_ID} #unity1week\n";
             pushed += () => UnityRoomTweet.Tweet(GameConfig.GAME_ID, tweetText);
@@ -19,10 +19,10 @@ namespace Furu.InGame.Presentation.View
             pushed += () => Application.OpenURL(url);
 #endif
         }
-        
-        public void SetUpHeightTweet(float value)
+
+        public void SetUpHeightTweet(float value, string liquidName)
         {
-            var tweetText = $"高さ {value.ToString("F2")}m まで吹っ飛ばした！\n";
+            var tweetText = $"{liquidName}で高さ {value.ToString("F2")}m まで吹っ飛ばした！\n";
 #if UNITY_WEBGL
             tweetText += $"#{GameConfig.GAME_ID} #unity1week\n";
             pushed += () => UnityRoomTweet.Tweet(GameConfig.GAME_ID, tweetText);
