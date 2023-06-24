@@ -80,9 +80,23 @@ namespace Furu.InGame.Presentation.View
             }
         }
 
+        public async UniTask ResetPositionAsync(float animationTime, CancellationToken token)
+        {
+            await transform
+                .DOLocalMove(Vector3.zero, animationTime)
+                .SetEase(Ease.Linear)
+                .SetLink(gameObject)
+                .WithCancellation(token);
+        }
+
         public void ShowSplash()
         {
             splash.Play();
+        }
+
+        public void SyncAngle(float z)
+        {
+            transform.SetEulerAngleZ(z);
         }
     }
 }

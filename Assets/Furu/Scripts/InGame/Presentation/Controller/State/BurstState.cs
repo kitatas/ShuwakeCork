@@ -7,12 +7,14 @@ namespace Furu.InGame.Presentation.Controller
 {
     public sealed class BurstState : BaseState
     {
+        private readonly ArrowView _arrowView;
         private readonly BottleView _bottleView;
         private readonly CorkView _corkView;
         private readonly LiquidView _liquidView;
 
-        public BurstState(BottleView bottleView, CorkView corkView, LiquidView liquidView)
+        public BurstState(ArrowView arrowView, BottleView bottleView, CorkView corkView, LiquidView liquidView)
         {
+            _arrowView = arrowView;
             _bottleView = bottleView;
             _corkView = corkView;
             _liquidView = liquidView;
@@ -28,9 +30,7 @@ namespace Furu.InGame.Presentation.Controller
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
             // TODO: 発射演出
-            // TODO: 角度調整
-            var angle = new Vector2(1.0f, 1.0f);
-            _corkView.Shot(_bottleView.shakePower * 10.0f * angle);
+            _corkView.Shot(_bottleView.shakePower * 10.0f * _arrowView.direction);
             _bottleView.ShowSplash();
             _liquidView.Splash();
 

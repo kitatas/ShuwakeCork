@@ -6,6 +6,7 @@ namespace Furu.InGame
         Title,
         SetUp,
         Input,
+        Angle,
         Burst,
         Finish,
         Result,

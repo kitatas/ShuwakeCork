@@ -12,6 +12,7 @@ namespace Furu.InGame.Installer
     {
         [SerializeField] private RankingView rankingView = default;
         [SerializeField] private AccountDeleteView accountDeleteView = default;
+        [SerializeField] private ArrowView arrowView = default;
         [SerializeField] private BottleView bottleView = default;
         [SerializeField] private CorkView corkView = default;
         [SerializeField] private LiquidView liquidView = default;
@@ -32,6 +33,7 @@ namespace Furu.InGame.Installer
 
             // Controller
             builder.Register<StateController>(Lifetime.Scoped);
+            builder.Register<AngleState>(Lifetime.Scoped);
             builder.Register<BurstState>(Lifetime.Scoped);
             builder.Register<FinishState>(Lifetime.Scoped);
             builder.Register<InputState>(Lifetime.Scoped);
@@ -50,6 +52,7 @@ namespace Furu.InGame.Installer
             // View
             builder.RegisterInstance<RankingView>(rankingView);
             builder.RegisterInstance<AccountDeleteView>(accountDeleteView);
+            builder.RegisterInstance<ArrowView>(arrowView);
             builder.RegisterInstance<BottleView>(bottleView);
             builder.RegisterInstance<CorkView>(corkView);
             builder.RegisterInstance<LiquidView>(liquidView);

@@ -8,6 +8,7 @@ namespace Furu.InGame
         public const GameState INIT_STATE = GameState.Title;
 
         public const float SHAKE_TIME = 10.0f;
+        public const float ANGLE_TIME = 5.0f;
     }
 
     public sealed class TagConfig
