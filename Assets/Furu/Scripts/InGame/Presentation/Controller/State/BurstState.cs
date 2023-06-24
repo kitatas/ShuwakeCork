@@ -1,5 +1,6 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
+using Furu.InGame.Domain.UseCase;
 using Furu.InGame.Presentation.View;
 using UnityEngine;
 
@@ -7,13 +8,16 @@ namespace Furu.InGame.Presentation.Controller
 {
     public sealed class BurstState : BaseState
     {
+        private readonly UserDataUseCase _userDataUseCase;
         private readonly ArrowView _arrowView;
         private readonly BottleView _bottleView;
         private readonly CorkView _corkView;
         private readonly LiquidView _liquidView;
 
-        public BurstState(ArrowView arrowView, BottleView bottleView, CorkView corkView, LiquidView liquidView)
+        public BurstState(UserDataUseCase userDataUseCase, ArrowView arrowView, BottleView bottleView,
+            CorkView corkView, LiquidView liquidView)
         {
+            _userDataUseCase = userDataUseCase;
             _arrowView = arrowView;
             _bottleView = bottleView;
             _corkView = corkView;
@@ -29,9 +33,8 @@ namespace Furu.InGame.Presentation.Controller
 
         public override async UniTask<GameState> TickAsync(CancellationToken token)
         {
-            // TODO: 発射演出
-            Debug.Log($"totalPower: {_bottleView.shakePower}");
-            _corkView.Shot(_bottleView.shakePower * 10.0f * _arrowView.direction);
+            var bonusRate = _userDataUseCase.GetPlayCount() >= GameConfig.PLAY_BONUS ? 1.5f : 1.0f;
+            _corkView.Shot(_bottleView.shakePower * bonusRate * 10.0f * _arrowView.direction);
             _liquidView.Splash();
 
             await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);
