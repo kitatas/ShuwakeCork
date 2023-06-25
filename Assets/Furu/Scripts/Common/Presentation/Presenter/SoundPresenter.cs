@@ -1,5 +1,6 @@
 using Furu.Common.Domain.UseCase;
 using Furu.Common.Presentation.View;
+using UniEx;
 using UniRx;
 using VContainer.Unity;
 
@@ -23,7 +24,11 @@ namespace Furu.Common.Presentation.Presenter
                 .AddTo(_soundView);
 
             _soundUseCase.playSe
-                .Subscribe(_soundView.PlaySe)
+                .Subscribe(x =>
+                {
+                    // 遅延を考慮した再生
+                    _soundView.Delay(x.delay, () => _soundView.PlaySe(x.clip));
+                })
                 .AddTo(_soundView);
 
             _soundUseCase.bgmVolume

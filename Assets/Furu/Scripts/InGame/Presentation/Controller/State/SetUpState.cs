@@ -52,14 +52,14 @@ namespace Furu.InGame.Presentation.Controller
             _liquidView.SetUp(liquid);
 
             // ボトルに注ぐ
-            _soundUseCase.PlaySe(SeType.Pour);
+            _soundUseCase.PlaySe(SeType.Pour, 0.35f);
             await _liquidView.PourAsync(BottleConfig.POUR_TIME, token);
             await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
 
             // ボーナス
             if (_userDataUseCase.GetPlayCount() >= GameConfig.PLAY_BONUS)
             {
-                _soundUseCase.PlaySe(SeType.Throw);
+                _soundUseCase.PlaySe(SeType.Throw, 1.35f);
                 await _candyView.ThrowAsync(BottleConfig.POUR_TIME, token);
                 await UniTask.Delay(TimeSpan.FromSeconds(1.0f), cancellationToken: token);
             }
