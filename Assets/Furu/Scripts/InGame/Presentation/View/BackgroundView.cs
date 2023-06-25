@@ -1,3 +1,4 @@
+using System;
 using UniEx;
 using UniRx;
 using UniRx.Triggers;
@@ -10,7 +11,7 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private CameraView cameraView = default;
         [SerializeField] private RectTransform[] backgrounds = default;
 
-        private readonly float _interval = 17.42f;
+        private readonly float _interval = 49.77f;
 
         private void Start()
         {
@@ -21,7 +22,8 @@ namespace Furu.InGame.Presentation.View
         private void TraceForward()
         {
             var index = 0;
-            this.UpdateAsObservable()
+            TraceAsObservable()
+                .Where(x => x.Current > x.Previous)
                 .Subscribe(_ =>
                 {
                     var x = backgrounds[index].position.x;
@@ -37,7 +39,8 @@ namespace Furu.InGame.Presentation.View
         private void TraceBack()
         {
             var index = backgrounds.GetLastIndex();
-            this.UpdateAsObservable()
+            TraceAsObservable()
+                .Where(x => x.Current < x.Previous)
                 .Subscribe(_ =>
                 {
                     var x = backgrounds[index].position.x;
@@ -48,6 +51,13 @@ namespace Furu.InGame.Presentation.View
                     }
                 })
                 .AddTo(this);
+        }
+
+        private IObservable<Pair<float>> TraceAsObservable()
+        {
+            return this.UpdateAsObservable()
+                .Select(_ => cameraView.x)
+                .Pairwise();
         }
     }
 }
