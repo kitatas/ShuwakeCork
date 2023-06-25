@@ -41,7 +41,7 @@ Shader "Custom/Background" {
 
     float4 frag(v2f_img i) : SV_Target
     {
-        float n = 25; // 縦横の繰り返し数
+        float n = 50; // 縦横の繰り返し数
         float t = _Time.y * 0.5;
         // float t = _Time.y * 0.5 + rand(floor(i.uv * n));
 
