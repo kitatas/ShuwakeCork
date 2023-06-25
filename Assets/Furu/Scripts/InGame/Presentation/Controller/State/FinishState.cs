@@ -4,6 +4,7 @@ using Cysharp.Threading.Tasks;
 using Furu.Common.Domain.UseCase;
 using Furu.InGame.Domain.UseCase;
 using Furu.InGame.Presentation.View;
+using UnityEngine;
 
 namespace Furu.InGame.Presentation.Controller
 {
@@ -37,7 +38,8 @@ namespace Furu.InGame.Presentation.Controller
             _loadingUseCase.Set(true);
 
             // ユーザーの記録更新 + ランキング送信
-            var distance = _corkView.flyingDistance;
+            // 飛距離は絶対値
+            var distance = Mathf.Abs(_corkView.flyingDistance);
             var height = _corkView.height;
             await _userRecordUseCase.SendScoreAsync(distance, height, token);
 
