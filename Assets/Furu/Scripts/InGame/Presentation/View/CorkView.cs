@@ -95,7 +95,7 @@ namespace Furu.InGame.Presentation.View
             // 一度も接地していない
             if (_isGround == false) return false;
 
-            if (rigidbody2d.velocity.magnitude <= 0.1f)
+            if (rigidbody2d.velocity.magnitude <= 0.05f)
             {
                 rigidbody2d.velocity = Vector2.zero;
                 return true;
