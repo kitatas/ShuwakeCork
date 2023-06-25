@@ -15,6 +15,7 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private CameraView cameraView = default;
 
         [SerializeField] private Rigidbody2D rigidbody2d = default;
+        [SerializeField] private TrailRenderer trailRenderer = default;
 
         private bool _isGround;
         public float height { get; private set; } = 0.0f;
@@ -24,6 +25,7 @@ namespace Furu.InGame.Presentation.View
         {
             // Hide
             rigidbody2d.simulated = false;
+            trailRenderer.enabled = false;
 
             this.OnCollisionEnter2DAsObservable()
                 .Where(x => x.gameObject.CompareTag(TagConfig.GROUND))
@@ -85,6 +87,7 @@ namespace Furu.InGame.Presentation.View
             transform.SetParent(null);
             rigidbody2d.simulated = true;
             rigidbody2d.AddForce(power);
+            trailRenderer.enabled = true;
         }
 
         public bool IsStop()
