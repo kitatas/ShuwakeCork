@@ -38,7 +38,8 @@ namespace Furu.InGame.Presentation.Controller
         {
             _soundUseCase.PlaySe(SeType.Burst);
             var bonusRate = _userDataUseCase.GetPlayCount() >= GameConfig.PLAY_BONUS ? 1.5f : 1.0f;
-            _corkView.Shot(_bottleView.shakePower * bonusRate * 10.0f * _arrowView.direction);
+            var power = (_bottleView.shakePower + 10.0f) * 10.0f;
+            _corkView.Shot(power * bonusRate * _arrowView.direction);
             _liquidView.Splash();
 
             await UniTask.WaitUntil(_corkView.IsStop, cancellationToken: token);
