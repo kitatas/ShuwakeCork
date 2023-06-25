@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 358d663e024548b7a83b279ab3050673, type: 3}
+  m_Name: SeData - Shake
+  m_EditorClassIdentifier: 
+  seType: 7
+  audioClip: {fileID: 8300000, guid: 556fc74d79c314b5e9d9baa8a78db93e, type: 3}
