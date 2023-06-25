@@ -1,6 +1,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using Furu.Common;
+using Furu.Common.Domain.UseCase;
 using Furu.InGame.Domain.UseCase;
 using Furu.InGame.Presentation.View;
 using UnityEngine;
@@ -9,14 +10,16 @@ namespace Furu.InGame.Presentation.Controller
 {
     public sealed class AngleState : BaseState
     {
+        private readonly SoundUseCase _soundUseCase;
         private readonly StateUseCase _stateUseCase;
         private readonly TimeUseCase _timeUseCase;
         private readonly ArrowView _arrowView;
         private readonly BottleView _bottleView;
 
-        public AngleState(StateUseCase stateUseCase, TimeUseCase timeUseCase, ArrowView arrowView,
-            BottleView bottleView)
+        public AngleState(SoundUseCase soundUseCase, StateUseCase stateUseCase, TimeUseCase timeUseCase,
+            ArrowView arrowView, BottleView bottleView)
         {
+            _soundUseCase = soundUseCase;
             _stateUseCase = stateUseCase;
             _timeUseCase = timeUseCase;
             _arrowView = arrowView;
@@ -35,8 +38,9 @@ namespace Furu.InGame.Presentation.Controller
         {
             // 初期位置に戻す
             await _bottleView.ResetPositionAsync(UiConfig.ANIMATION_TIME, token);
-            
+
             // angle 調整の SetUp
+            _soundUseCase.PlaySe(SeType.Timer);
             await _timeUseCase.IncreaseAsync(UiConfig.ANIMATION_TIME, token);
             await _arrowView.ShowAsync(UiConfig.ANIMATION_TIME, token);
 

@@ -40,5 +40,16 @@ namespace Furu.Common
     {
         None,
         Decision,
+        Pour,
+        Throw,
+        TempClose,
+        Close,
+        Timer,
+        Shake,
+        Burst,
+        Ground,
+        Finish,
+        Result,
+        Bonus,
     }
 }

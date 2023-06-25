@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Furu.Common;
 using UniEx;
 using UniRx;
 using UniRx.Triggers;
@@ -19,14 +20,18 @@ namespace Furu.InGame.Presentation.View
         public float height { get; private set; } = 0.0f;
         public float flyingDistance => transform.position.x;
 
-        public void Init(Func<GameState, bool> isState)
+        public void Init(Func<GameState, bool> isState, Action<SeType> playSe)
         {
             // Hide
             rigidbody2d.simulated = false;
 
             this.OnCollisionEnter2DAsObservable()
                 .Where(x => x.gameObject.CompareTag(TagConfig.GROUND))
-                .Subscribe(_ => _isGround = true)
+                .Subscribe(_ =>
+                {
+                    _isGround = true;
+                    playSe?.Invoke(SeType.Ground);
+                })
                 .AddTo(this);
 
             this.UpdateAsObservable()

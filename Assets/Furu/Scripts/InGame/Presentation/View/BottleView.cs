@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using Furu.Common;
 using UniEx;
 using UniRx;
 using UnityEngine;
@@ -14,12 +15,15 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private CameraView cameraView = default;
 
         private Func<GameState, bool> _isState;
+        private Action<SeType> _playSe;
         private Subject<Vector3> _dragPosition;
+        private int _dragFrame;
         public float shakePower { get; private set; }
 
-        public void Init(Func<GameState, bool> isState)
+        public void Init(Func<GameState, bool> isState, Action<SeType> playSe)
         {
             _isState = isState;
+            _playSe = playSe;
             _dragPosition = new Subject<Vector3>();
             shakePower = 0.0f;
 
@@ -68,6 +72,12 @@ namespace Furu.InGame.Presentation.View
                 position.SetZ(0.0f);
                 transform.position = position;
                 _dragPosition?.OnNext(position);
+
+                if (_dragFrame.IsEqual(0))
+                {
+                    _playSe?.Invoke(SeType.Shake);
+                }
+                _dragFrame.RepeatIncrement(0, 10);
             }
         }
 

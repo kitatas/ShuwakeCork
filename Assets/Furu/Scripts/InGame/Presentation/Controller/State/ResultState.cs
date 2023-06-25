@@ -12,16 +12,18 @@ namespace Furu.InGame.Presentation.Controller
         private readonly LoadingUseCase _loadingUseCase;
         private readonly RankingUseCase _rankingUseCase;
         private readonly SceneUseCase _sceneUseCase;
+        private readonly SoundUseCase _soundUseCase;
         private readonly UserDataUseCase _userDataUseCase;
         private readonly BonusView _bonusView;
         private readonly RankingView _rankingView;
 
         public ResultState(LoadingUseCase loadingUseCase, RankingUseCase rankingUseCase, SceneUseCase sceneUseCase,
-            UserDataUseCase userDataUseCase, BonusView bonusView, RankingView rankingView)
+            SoundUseCase soundUseCase, UserDataUseCase userDataUseCase, BonusView bonusView, RankingView rankingView)
         {
             _loadingUseCase = loadingUseCase;
             _rankingUseCase = rankingUseCase;
             _sceneUseCase = sceneUseCase;
+            _soundUseCase = soundUseCase;
             _userDataUseCase = userDataUseCase;
             _bonusView = bonusView;
             _rankingView = rankingView;
@@ -49,11 +51,13 @@ namespace Furu.InGame.Presentation.Controller
 
             _loadingUseCase.Set(false);
 
+            _soundUseCase.PlaySe(SeType.Result);
             await _rankingView.ReloadAsync(UiConfig.POPUP_TIME, token);
 
             // プレイボーナス
             if (_userDataUseCase.GetPlayCount() == GameConfig.PLAY_BONUS)
             {
+                _soundUseCase.PlaySe(SeType.Bonus);
                 await _bonusView.PopAsync(UiConfig.POPUP_TIME, token);
             }
 
