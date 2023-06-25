@@ -14,6 +14,12 @@ namespace Furu.InGame.Presentation.View
 
         private void Start()
         {
+            TraceForward();
+            TraceBack();
+        }
+
+        private void TraceForward()
+        {
             var index = 0;
             this.UpdateAsObservable()
                 .Subscribe(_ =>
@@ -23,6 +29,22 @@ namespace Furu.InGame.Presentation.View
                     {
                         backgrounds[index].SetLocalPositionX(x + _interval * backgrounds.Length);
                         index.RepeatIncrement(0, backgrounds.GetLastIndex());
+                    }
+                })
+                .AddTo(this);
+        }
+
+        private void TraceBack()
+        {
+            var index = backgrounds.GetLastIndex();
+            this.UpdateAsObservable()
+                .Subscribe(_ =>
+                {
+                    var x = backgrounds[index].position.x;
+                    if (cameraView.x <= x - _interval)
+                    {
+                        backgrounds[index].SetLocalPositionX(x - _interval * backgrounds.Length);
+                        index.RepeatDecrement(0, backgrounds.GetLastIndex());
                     }
                 })
                 .AddTo(this);
