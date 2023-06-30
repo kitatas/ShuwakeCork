@@ -30,7 +30,7 @@ namespace Furu.Common
 
     public sealed class SoundConfig
     {
-        public const float INIT_VOLUME = 5.0f;
+        public const float INIT_VOLUME = 0.5f;
     }
 
     public sealed class SceneConfig
