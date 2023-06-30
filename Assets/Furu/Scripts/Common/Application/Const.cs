@@ -3,7 +3,7 @@ namespace Furu.Common
     public sealed class AppConfig
     {
         public const int MAJOR_VERSION = 1;
-        public const int MINOR_VERSION = 0;
+        public const int MINOR_VERSION = 1;
         public static readonly string APP_VERSION = $"{MAJOR_VERSION.ToString()}.{MINOR_VERSION.ToString()}";
     }
 
