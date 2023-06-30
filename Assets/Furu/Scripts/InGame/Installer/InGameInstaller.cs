@@ -13,6 +13,7 @@ namespace Furu.InGame.Installer
     {
         [SerializeField] private TextAsset liquidMaster = default;
 
+        [SerializeField] private FastForwardButtonView fastForwardButtonView = default;
         [SerializeField] private BonusView bonusView = default;
         [SerializeField] private RankingView rankingView = default;
         [SerializeField] private AccountDeleteView accountDeleteView = default;
@@ -33,6 +34,7 @@ namespace Furu.InGame.Installer
             builder.Register<LiquidRepository>(Lifetime.Scoped).WithParameter(liquidMaster);
 
             // UseCase
+            builder.Register<FastForwardUseCase>(Lifetime.Scoped);
             builder.Register<LiquidUseCase>(Lifetime.Scoped);
             builder.Register<RankingUseCase>(Lifetime.Scoped);
             builder.Register<StateUseCase>(Lifetime.Scoped);
@@ -59,6 +61,7 @@ namespace Furu.InGame.Installer
             builder.RegisterEntryPoint<TimePresenter>();
 
             // View
+            builder.RegisterInstance<FastForwardButtonView>(fastForwardButtonView);
             builder.RegisterInstance<BonusView>(bonusView);
             builder.RegisterInstance<RankingView>(rankingView);
             builder.RegisterInstance<AccountDeleteView>(accountDeleteView);

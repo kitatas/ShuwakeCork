@@ -24,6 +24,7 @@ namespace Furu.Common.Domain.Repository
                 uid = "",
                 bgmVolume = SoundConfig.INIT_VOLUME,
                 seVolume = SoundConfig.INIT_VOLUME,
+                isFast = false,
             };
             Save(newData);
 
@@ -48,6 +49,13 @@ namespace Furu.Common.Domain.Repository
         {
             var loadData = Load();
             loadData.seVolume = seVolume;
+            Save(loadData);
+        }
+        
+        public void SaveFast(bool value)
+        {
+            var loadData = Load();
+            loadData.isFast = value;
             Save(loadData);
         }
 

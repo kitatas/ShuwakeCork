@@ -10,6 +10,9 @@ namespace Furu.InGame
         public const float ANGLE_TIME = 5.0f;
 
         public const int PLAY_BONUS = 3;
+
+        public const float FAST_SPEED = 10.0f;
+        public const float DEFAULT_SPEED = 1.0f;
     }
 
     public sealed class TagConfig

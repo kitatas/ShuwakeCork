@@ -5,5 +5,6 @@ namespace Furu.Common.Data.DataStore
         public string uid;
         public float bgmVolume;
         public float seVolume;
+        public bool isFast;
     }
 }
