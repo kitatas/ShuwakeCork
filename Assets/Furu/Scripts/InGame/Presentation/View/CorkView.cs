@@ -20,6 +20,7 @@ namespace Furu.InGame.Presentation.View
         private bool _isGround;
         public float height { get; private set; } = 0.0f;
         public float flyingDistance => transform.position.x;
+        public float currentHeight => transform.position.y;
 
         public void Init(Func<GameState, bool> isState, Action<SeType> playSe)
         {
@@ -63,13 +64,13 @@ namespace Furu.InGame.Presentation.View
                 })
                 .AddTo(this);
 
-            this.UpdateAsObservable()
+            this.LateUpdateAsObservable()
                 .Where(_ =>
                 {
                     var isBurstState = isState?.Invoke(GameState.Burst);
                     return isBurstState.HasValue && isBurstState.Value;
                 })
-                .Subscribe(_ => cameraView.Chase(flyingDistance))
+                .Subscribe(_ => cameraView.Chase(flyingDistance, currentHeight))
                 .AddTo(this);
         }
 

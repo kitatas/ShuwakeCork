@@ -1,3 +1,4 @@
+using UniEx;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,11 +27,12 @@ namespace Furu.InGame.Presentation.View
             return mainCamera.ScreenToWorldPoint(cursorPosition);
         }
 
-        public void Chase(float x)
+        public void Chase(float x, float y)
         {
-            transform.position = new Vector3(x, 0.0f, -10.0f);
+            var setY = Mathf.Max(0.0f, y);
+            transform.position = new Vector3(x, setY, -10.0f);
         }
 
-        public float x => transform.position.x;
+        public Vector2 position => transform.position;
     }
 }

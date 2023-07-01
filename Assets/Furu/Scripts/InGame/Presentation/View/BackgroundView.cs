@@ -1,4 +1,3 @@
-using System;
 using UniEx;
 using UniRx;
 using UniRx.Triggers;
@@ -11,53 +10,57 @@ namespace Furu.InGame.Presentation.View
         [SerializeField] private CameraView cameraView = default;
         [SerializeField] private RectTransform[] backgrounds = default;
 
-        private readonly float _interval = 49.77f;
+        private readonly float _interval = 62.22f;
 
-        private void Start()
+        private void Awake()
         {
-            TraceForward();
-            TraceBack();
-        }
-
-        private void TraceForward()
-        {
-            var index = 0;
-            TraceAsObservable()
-                .Where(x => x.Current > x.Previous)
-                .Subscribe(_ =>
+            this.UpdateAsObservable()
+                .Select(_ => cameraView.position)
+                .Pairwise()
+                .Subscribe(pair =>
                 {
-                    var x = backgrounds[index].position.x;
-                    if (cameraView.x >= x + _interval)
+                    backgrounds.Each(x =>
                     {
-                        backgrounds[index].SetLocalPositionX(x + _interval * backgrounds.Length);
-                        index.RepeatIncrement(0, backgrounds.GetLastIndex());
-                    }
+                        var cameraX = pair.Current.x;
+                        var currentX = x.position.x;
+                        if (cameraX > pair.Previous.x)
+                        {
+                            // forward
+                            if (cameraX > currentX + _interval)
+                            {
+                                x.SetLocalPositionX(currentX + _interval * 3);
+                            }
+                        }
+                        else if (cameraX < pair.Previous.x)
+                        {
+                            // back
+                            if (cameraX < currentX - _interval)
+                            {
+                                x.SetLocalPositionX(currentX - _interval * 3);
+                            }
+                        }
+
+                        var cameraY = pair.Current.y;
+                        var currentY = x.position.y;
+                        if (cameraY > pair.Previous.y)
+                        {
+                            // up
+                            if (cameraY > currentY + _interval)
+                            {
+                                x.SetLocalPositionY(currentY + _interval * 2);
+                            }
+                        }
+                        else if (cameraY < pair.Previous.y)
+                        {
+                            // down
+                            if (cameraY < currentY - _interval)
+                            {
+                                x.SetLocalPositionY(currentY - _interval * 2);
+                            }
+                        }
+                    });
                 })
                 .AddTo(this);
-        }
-
-        private void TraceBack()
-        {
-            var index = backgrounds.GetLastIndex();
-            TraceAsObservable()
-                .Where(x => x.Current < x.Previous)
-                .Subscribe(_ =>
-                {
-                    var x = backgrounds[index].position.x;
-                    if (cameraView.x <= x - _interval)
-                    {
-                        backgrounds[index].SetLocalPositionX(x - _interval * backgrounds.Length);
-                        index.RepeatDecrement(0, backgrounds.GetLastIndex());
-                    }
-                })
-                .AddTo(this);
-        }
-
-        private IObservable<Pair<float>> TraceAsObservable()
-        {
-            return this.UpdateAsObservable()
-                .Select(_ => cameraView.x)
-                .Pairwise();
         }
     }
 }
