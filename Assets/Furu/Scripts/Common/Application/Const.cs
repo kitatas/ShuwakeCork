@@ -56,4 +56,14 @@ namespace Furu.Common
 
         public const string UNKNOWN_ERROR = "UNKNOWN_ERROR";
     }
+
+    public sealed class UrlConfig
+    {
+        public const string DEVELOPER_APP = "https://play.google.com/store/apps/developer?id=KitaLab";
+
+        public const string INFORMATION = "https://kitatas.github.io/GranasdAlime/";
+        public const string CREDIT = INFORMATION + "credit";
+        public const string LICENSE = INFORMATION + "license";
+        public const string POLICY = INFORMATION + "policy";
+    }
 }
