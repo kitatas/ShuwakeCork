@@ -16,6 +16,31 @@ namespace Furu.Common.Domain.Repository
             PlayFabSettings.staticSettings.TitleId = PlayFabConfig.TITLE_ID;
         }
 
+        public async UniTask<MasterData> FetchMasterDataAsync(CancellationToken token)
+        {
+            var request = new GetTitleDataRequest();
+
+            var completionSource = new UniTaskCompletionSource<GetTitleDataResult>();
+            PlayFabClientAPI.GetTitleData(
+                request,
+                result => completionSource.TrySetResult(result),
+                error => completionSource.TrySetException(new RetryException(ExceptionConfig.FAILED_RESPONSE_DATA)));
+
+            var response = await completionSource.Task;
+            if (response == null)
+            {
+                throw new RetryException(ExceptionConfig.FAILED_RESPONSE_DATA);
+            }
+
+            var data = response.Data;
+            if (data == null)
+            {
+                throw new RebootException(ExceptionConfig.NOT_FOUND_DATA);
+            }
+
+            return new MasterData(data);
+        }
+
         public async UniTask<(string, LoginResult)> CreateUserAsync(CancellationToken token)
         {
             while (true)
