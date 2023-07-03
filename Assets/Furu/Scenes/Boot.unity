@@ -974,6 +974,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   canvasGroup: {fileID: 748171442}
+  decision: {fileID: 1397606715}
 --- !u!1001 &1371835456
 PrefabInstance:
   m_ObjectHideFlags: 0
