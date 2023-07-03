@@ -61,9 +61,11 @@ namespace Furu.Common
 
     public sealed class UrlConfig
     {
+        public const string APP_NAME = "ShuwakeCork";
         public const string DEVELOPER_APP = "https://play.google.com/store/apps/developer?id=KitaLab";
+        public const string APP = "https://play.google.com/store/apps/details?id=com.KitaLab." + APP_NAME;
 
-        public const string INFORMATION = "https://kitatas.github.io/GranasdAlime/";
+        public const string INFORMATION = "https://kitatas.github.io/" + APP_NAME + "/";
         public const string CREDIT = INFORMATION + "credit";
         public const string LICENSE = INFORMATION + "license";
         public const string POLICY = INFORMATION + "policy";
