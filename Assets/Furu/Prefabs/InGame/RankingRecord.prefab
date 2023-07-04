@@ -185,6 +185,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 6808679972809362255, guid: a9d5c3da4d64b4e03af93ff6924a9b0b, type: 3}
+      propertyPath: m_FalloffDistance
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8175113168688966838, guid: a9d5c3da4d64b4e03af93ff6924a9b0b, type: 3}
       propertyPath: m_Name
       value: MPImage - Background
